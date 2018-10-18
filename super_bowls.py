@@ -1,3 +1,5 @@
+# move functions to another file
+
 # imports
 import csv
 import operator
@@ -43,10 +45,12 @@ with open('teams.csv') as f:
 mvps = []
 winners = []
 runners_up = []
+winning_coaches = []
 
 # create dictionaries to be populated later
 mvps_dict = {}
 champions = {}
+winning_coaches_dict = {}
 
 # sort dictionary
 sorted_dict = sorted(super_bowls.items(), key=operator.itemgetter(0), reverse=True)
@@ -57,15 +61,18 @@ for k, v in sorted_dict:
 	mvps.append(mvp)
 	winner = v[2]
 	winners.append(winner)
+	winning_coach = v[7]
+	winning_coaches.append(winning_coach)
 
 # convert list to a set
 unique_mvps = set(mvps)
 unique_winners = set(winners)
+unique_winning_coaches = set(winning_coaches)
+
+print(rtn())
 
 # populate a dictionary with player and mvp win total as the keys and values
 win_totals('player', unique_mvps, 'mvp_count', mvp, mvps, mvps_dict)
-
-print(rtn())
 
 # print mvps
 print("mvps sorted alphabetically").upper()
@@ -79,10 +86,10 @@ print("mvps sorted by number of mvp trophies won").upper()
 for player, count in sorted(mvps_dict.iteritems(), key=lambda (player, count): (count, player), reverse=True):
 	print("%s: %s") % (player, count)
 
+print(rtn())
+
 # populate dictionary with teams and super bowl win total as keys and values
 win_totals('champ', unique_winners, 'winner_count', winner, winners, champions)
-
-print(rtn())
 
 # print teams sorted by number of times they've won the super bowl
 print("champions").upper()
@@ -91,18 +98,18 @@ for champ, winner_count in sorted(champions.iteritems(), key=lambda (champ, winn
 
 print(rtn())
 
+win_totals('coach', unique_winning_coaches, 'winning_coach_count', winning_coach, winning_coaches, winning_coaches_dict)
+
+print("coaches with most wins".upper())
+for winning_coach, winning_coach_count in sorted(winning_coaches_dict.iteritems(), key=lambda (winning_coach, winning_coach_count): (winning_coach_count, winning_coach), reverse=True):
+	print("%s: %s") % (winning_coach, winning_coach_count)
+
+print(rtn())
+
 # print teams yet to win the super bowl
-print("yet to win the super bowl").upper()
+print("teams yet to win the super bowl").upper()
 runners_up = set(current_nfl_teams) - set(winners)
 for team in sorted(runners_up):
 	print(team)
 
 print(rtn())
-
-# add questions
-# which team has won the most super bowls?
-# who has won the mvp more than anyone else?
-# what (insert number) teams have yet to win the super bowl?
-# who are the only two players to be voted co-mvps?
-# what city has hosted the super bowl more than any other?
-# what coach has won the super bowl more than any other?
