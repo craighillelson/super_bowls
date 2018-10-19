@@ -44,13 +44,15 @@ with open('teams.csv') as f:
 # create list to be populated later
 mvps = []
 winners = []
-runners_up = []
+losers = []
+yet_to_win = []
 winning_coaches = []
 
 # create dictionaries to be populated later
 mvps_dict = {}
 champions = {}
 winning_coaches_dict = {}
+losers_dict = {}
 
 # sort dictionary
 sorted_dict = sorted(super_bowls.items(), key=operator.itemgetter(0), reverse=True)
@@ -61,6 +63,8 @@ for k, v in sorted_dict:
 	mvps.append(mvp)
 	winner = v[2]
 	winners.append(winner)
+	loser = v[4]
+	losers.append(loser)
 	winning_coach = v[7]
 	winning_coaches.append(winning_coach)
 
@@ -68,6 +72,7 @@ for k, v in sorted_dict:
 unique_mvps = set(mvps)
 unique_winners = set(winners)
 unique_winning_coaches = set(winning_coaches)
+unique_losing_teams = set(losers)
 
 print(rtn())
 
@@ -98,6 +103,15 @@ for champ, winner_count in sorted(champions.iteritems(), key=lambda (champ, winn
 
 print(rtn())
 
+print("losing teams".upper())
+
+win_totals('losing_team', unique_losing_teams, 'losing_team_count', loser, losers, losers_dict)
+
+for losing_team, losing_team_count in sorted(losers_dict.iteritems(), key=lambda (losing_team, losing_team_count): (losing_team_count, losing_team), reverse=True):
+	print("%s: %s") % (losing_team, losing_team_count)
+
+print(rtn())
+
 win_totals('coach', unique_winning_coaches, 'winning_coach_count', winning_coach, winning_coaches, winning_coaches_dict)
 
 print("coaches with most wins".upper())
@@ -108,8 +122,8 @@ print(rtn())
 
 # print teams yet to win the super bowl
 print("teams yet to win the super bowl").upper()
-runners_up = set(current_nfl_teams) - set(winners)
-for team in sorted(runners_up):
+yet_to_win = set(current_nfl_teams) - set(winners)
+for team in sorted(yet_to_win):
 	print(team)
 
 print(rtn())
