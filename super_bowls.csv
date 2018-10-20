@@ -1,6 +1,6 @@
 date,superbowl,site,winner,winnerscore,loser,loserscore,mvp,winningcoach
 1967-01-15,I,Los Angeles Memorial Coliseum,Green Bay Packers,35,Kansas City Chiefs,10,Bart Starr,Vince Lombardi
-1968-01-14,II,Orange Bowl (Miami),Green Bay Packers,33,Oakland,14,Bart Starr,Vince Lombardi
+1968-01-14,II,Orange Bowl (Miami),Green Bay Packers,33,Oakland Raiders,14,Bart Starr,Vince Lombardi
 1969-01-12,III,Orange Bowl (Miami),New York Jets,16,Baltimore Colts,7,Joe Namath,Weeb Ewbank
 1970-01-11,IV,Tulane Stadium (New Orleans),Kansas City Chiefs,23,Minnesota Vikings,7,Len Dawson,Hank Stram
 1971-01-17,V,Orange Bowl (Miami),Baltimore Colts,16,Dallas Cowboys,13,Chuck Howley,Don McCafferty
@@ -34,8 +34,8 @@ date,superbowl,site,winner,winnerscore,loser,loserscore,mvp,winningcoach
 1999-01-31,XXXIII,Pro Player Stadium (Miami),Denver Broncos,34,Atlanta Falcons,19,John Elway,Mike Shanihan
 2000-01-30,XXXIV,Georgia Dome (Atlanta),St. Louis Rams,23,Tennessee Titans,16,Kurt Warner,Dick Vermeil
 2001-01-28,XXXV,Raymond James Stadium (Tampa),Baltimore Ravens,34,New York Giants,7,Ray Lewis,Brian Billick
-2002-02-03,XXXVI,Superdome (New Orleans),New England Patriots,20,St. Louis,17,Tom Brady,Bill Belichik
-2003-01-26,XXXVII,Qualcomm Stadium (San Diego),Tampa Bay Buccaneers,48,Oakland,21,Dexter Jackson,Jon Gruden
+2002-02-03,XXXVI,Superdome (New Orleans),New England Patriots,20,St. Louis Rams,17,Tom Brady,Bill Belichik
+2003-01-26,XXXVII,Qualcomm Stadium (San Diego),Tampa Bay Buccaneers,48,Oakland Raiders,21,Dexter Jackson,Jon Gruden
 2004-02-01,XXXVIII,Reliant Stadium (Houston),New England Patriots,32,Carolina Panthers,29,Tom Brady,Bill Belichik
 2005-02-06,XXXIX,Alltel Stadium (Jacksonville),New England Patriots,24,Philadelphia Eagles,21,Deion Branch,Bill Belichik
 2006-02-05,XL,Ford Field (Detroit),Pittsburgh Steelers,21,Seattle Seahawks,10,Hines Ward,Bill Cowher
