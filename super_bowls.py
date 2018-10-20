@@ -29,7 +29,7 @@ with open('super_bowls.csv') as f:
 	Row = namedtuple('Row', headings)
 	for r in f_csv:
 		row = Row(*r)
-		super_bowls[row.date] = [row.superbowl, row.site, row.winner, row.winnerscore, row.loser, row.loserscore, row.mvp, row.winningcoach]
+		super_bowls[row.date] = [row.superbowl, row.site, row.winner, row.winnerscore, row.loser, row.loserscore, row.mvp, row.winningcoach, row.losingcoach]
 
 # create list to be populated
 current_nfl_teams = []
@@ -47,12 +47,14 @@ winners = []
 losers = []
 yet_to_win = []
 winning_coaches = []
+losing_coaches = []
 
 # create dictionaries to be populated later
 mvps_dict = {}
 champions = {}
 winning_coaches_dict = {}
 losers_dict = {}
+losing_coaches_dict = {}
 
 # sort dictionary
 sorted_dict = sorted(super_bowls.items(), key=operator.itemgetter(0), reverse=True)
@@ -67,12 +69,15 @@ for k, v in sorted_dict:
 	losers.append(loser)
 	winning_coach = v[7]
 	winning_coaches.append(winning_coach)
+	losing_coach = v[8]
+	losing_coaches.append(losing_coach)
 
 # convert list to a set
 unique_mvps = set(mvps)
 unique_winners = set(winners)
 unique_winning_coaches = set(winning_coaches)
 unique_losing_teams = set(losers)
+unique_losing_coaches = set(losing_coaches)
 
 print(rtn())
 
@@ -114,11 +119,23 @@ print(rtn())
 
 win_totals('coach', unique_winning_coaches, 'winning_coach_count', winning_coach, winning_coaches, winning_coaches_dict)
 
-print("coaches with most wins".upper())
+print("coaches with most super bowl wins".upper())
 for winning_coach, winning_coach_count in sorted(winning_coaches_dict.iteritems(), key=lambda (winning_coach, winning_coach_count): (winning_coach_count, winning_coach), reverse=True):
 	print("%s: %s") % (winning_coach, winning_coach_count)
 
 print(rtn())
+
+print("coaches with most super bowl losses".upper())
+
+win_totals('coach', unique_losing_coaches, 'losing_coach_count', losing_coach, losing_coaches, losing_coaches_dict)
+
+for losing_coach, losing_coach_count in sorted(losing_coaches_dict.iteritems(), key=lambda (losing_coach, losing_coach_count): (losing_coach_count, losing_coach), reverse=True):
+	print("%s: %s") % (losing_coach, losing_coach_count)
+
+print(rtn())
+
+# print("coaches who have won and lost the super bowl".upper())
+# print("host cities")
 
 # print teams yet to win the super bowl
 print("teams yet to win the super bowl").upper()
