@@ -52,7 +52,8 @@ sites = []
 winnners_scores = []
 losers_scores = []
 combined_score = []
-super_bowl_names = []
+won_and_lost = []
+# super_bowl_names = []
 
 # create dictionaries to be populated later
 mvps_dict = {}
@@ -67,8 +68,8 @@ sorted_dict = sorted(super_bowls.items(), key=operator.itemgetter(0), reverse=Tr
 
 # populate list
 for k, v in sorted_dict:
-	super_bowl_name = v[0]
-	super_bowl_names.append(super_bowl_name)
+	# super_bowl_name = v[0]
+	# super_bowl_names.append(super_bowl_name)
 	site = v[1]
 	sites.append(site)
 	mvp = v[6]
@@ -149,7 +150,14 @@ for losing_coach, losing_coach_count in sorted(losing_coaches_dict.iteritems(), 
 
 print(rtn())
 
-# print("coaches who have won and lost the super bowl".upper())
+print("coaches who have won and lost the super bowl".upper())
+for coach in unique_winning_coaches:
+	if coach in unique_losing_coaches:
+		print(coach)
+	else:
+		pass
+
+print(rtn())
 
 # print teams yet to win the super bowl
 print("teams yet to win the super bowl").upper()
@@ -171,5 +179,7 @@ print("total scores".upper())
 for k, v in sorted(super_bowls.items()):
 	total_score = int(v[3]) + int(v[5])
 	print("%s: %s") % (v[0], total_score)
+
+print(rtn())
 
 # add winner_score and loser_score and rank them from highest to lowest
