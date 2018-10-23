@@ -41,7 +41,7 @@ with open('teams.csv') as f:
 		team = row['team']
 		current_nfl_teams.append(team)
 
-# create list to be populated later
+# create lists to be populated later
 mvps = []
 winners = []
 losers = []
@@ -51,6 +51,8 @@ losing_coaches = []
 sites = []
 winnners_scores = []
 losers_scores = []
+combined_score = []
+super_bowl_names = []
 
 # create dictionaries to be populated later
 mvps_dict = {}
@@ -65,6 +67,8 @@ sorted_dict = sorted(super_bowls.items(), key=operator.itemgetter(0), reverse=Tr
 
 # populate list
 for k, v in sorted_dict:
+	super_bowl_name = v[0]
+	super_bowl_names.append(super_bowl_name)
 	site = v[1]
 	sites.append(site)
 	mvp = v[6]
@@ -78,9 +82,9 @@ for k, v in sorted_dict:
 	losing_coach = v[8]
 	losing_coaches.append(losing_coach)
 	winner_score = v[3]
-	winnners_scores.append(winner_score)
 	loser_score = v[5]
-	losers_scores.append(loser_score)
+	total_score = int(winner_score) + int(loser_score)
+	combined_score.append(total_score)
 
 # convert list to a set
 unique_mvps = set(mvps)
@@ -163,5 +167,9 @@ for site, site_count in sorted(sites_dict.iteritems(), key=lambda (site, site_co
 
 print(rtn())
 
-# print("highest combined score")
+print("total scores".upper())
+for k, v in sorted(super_bowls.items()):
+	total_score = int(v[3]) + int(v[5])
+	print("%s: %s") % (v[0], total_score)
+
 # add winner_score and loser_score and rank them from highest to lowest
