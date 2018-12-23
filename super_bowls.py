@@ -127,13 +127,13 @@ win_totals('champ', unique_winners, 'winner_count', winner, winners, champions)
 
 # print teams sorted by number of times they've won the super bowl
 header("champions")
-for champ, winner_count in sorted(champions.iteritems(), key=lambda 
+for champ, winner_count in sorted(champions.iteritems(), key=lambda
     (champ, winner_count): (winner_count, champ), reverse=True):
     print("%s: %s") % (champ, winner_count)
 
 print rtn()
 
-win_totals('losing_team', unique_losing_teams, 'losing_team_count', loser, 
+win_totals('losing_team', unique_losing_teams, 'losing_team_count', loser,
     losers, losers_dict)
 
 # print("losing teams".upper())
@@ -160,13 +160,13 @@ for winning_coach, winning_coach_count in sorted(
 print rtn()
 
 win_totals(
-    'coach', unique_losing_coaches, 'losing_coach_count', losing_coach, 
+    'coach', unique_losing_coaches, 'losing_coach_count', losing_coach,
     losing_coaches, losing_coaches_dict
     )
 
 # print losing coaches in descending order of losses
 header("coaches with most super bowl losses")
-for losing_coach, losing_coach_count in sorted(losing_coaches_dict.iteritems(), 
+for losing_coach, losing_coach_count in sorted(losing_coaches_dict.iteritems(),
     key=lambda (losing_coach, losing_coach_count): 
     (losing_coach_count, losing_coach), reverse=True):
     print("%s: %s") % (losing_coach, losing_coach_count)
