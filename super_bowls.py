@@ -15,7 +15,7 @@ def header(a):
 def tally(a, b, c):
     i = 0
     for a in b:
-        if a == c: 
+        if a == c:
             i = i + 1
     return i
 
@@ -34,7 +34,7 @@ with open('super_bowls.csv') as f:
         row = Row(*r)
         super_bowls[row.date] = [
             row.superbowl, row.site, row.winner, row.winnerscore,
-            row.loser, row.loserscore, row.mvp, row.winningcoach, 
+            row.loser, row.loserscore, row.mvp, row.winningcoach,
             row.losingcoach
             ]
 
@@ -71,8 +71,7 @@ sites_dict = {}
 total_score_dict = {}
 
 # sort dictionary
-sorted_dict = sorted(super_bowls.items(), key=operator.itemgetter(0), 
-    reverse=True)
+sorted_dict = sorted(super_bowls.items(), key=operator.itemgetter(0), reverse=True)
 
 # populate list
 for k, v in sorted_dict:
