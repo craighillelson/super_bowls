@@ -12,7 +12,7 @@ rtn = lambda: '\n'
 def header(a):
     print(a.upper())
 
-def tally(a, b, c): 
+def tally(a, b, c):
     i = 0
     for a in b: 
         if a == c: 
