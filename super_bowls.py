@@ -6,8 +6,8 @@ import operator
 from collections import namedtuple
 from collections import OrderedDict
 
-# define lambda and functions 
-rtn = lambda : '\n'
+# define lambda and functions
+rtn = lambda: '\n'
 
 def header(a):
     print(a.upper())
@@ -33,8 +33,9 @@ with open('super_bowls.csv') as f:
     for r in f_csv:
         row = Row(*r)
         super_bowls[row.date] = [
-            row.superbowl, row.site, row.winner, row.winnerscore, row.loser, 
-            row.loserscore, row.mvp, row.winningcoach, row.losingcoach
+            row.superbowl, row.site, row.winner, row.winnerscore,
+            row.loser, row.loserscore, row.mvp, row.winningcoach, 
+            row.losingcoach
             ]
 
 # create list to be populated
@@ -103,7 +104,8 @@ unique_sites = set(sites)
 
 print(rtn())
 
-# populate a dictionary with player and mvp win total as the keys and values
+# populate a dictionary with player and mvp win total 
+# as the keys and values
 win_totals('player', unique_mvps, 'mvp_count', mvp, mvps, mvps_dict)
 
 # print mvps
@@ -190,8 +192,8 @@ for team in sorted(yet_to_win):
 
 print(rtn())
 
-# print host site in descending order ranked by number of times each site has 
-# hosted the game
+# print host site in descending order ranked by number of times each 
+# site has hosted the game
 header("host sites")
 win_totals('site', unique_sites, 'site_count', site, sites, sites_dict)
 
