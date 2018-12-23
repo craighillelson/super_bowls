@@ -103,7 +103,7 @@ unique_sites = set(sites)
 
 print(rtn())
 
-# populate a dictionary with player and mvp win total 
+# populate a dictionary with player and mvp win total
 # as the keys and values
 win_totals('player', unique_mvps, 'mvp_count', mvp, mvps, mvps_dict)
 
@@ -116,7 +116,7 @@ print(rtn())
 
 # print mvps sorted by numbers of mvp trophies won
 header("mvps sorted by number of mvp trophies won")
-for player, count in sorted(mvps_dict.iteritems(), key=lambda (player, count): 
+for player, count in sorted(mvps_dict.iteritems(), key=lambda (player, count):
     (count, player), reverse=True):
     print("%s: %s") % (player, count)
 
@@ -138,22 +138,22 @@ win_totals('losing_team', unique_losing_teams, 'losing_team_count', loser,
 
 # print("losing teams".upper())
 header("losing teams")
-for losing_team, losing_team_count in sorted(losers_dict.iteritems(), 
-    key=lambda (losing_team, losing_team_count): 
+for losing_team, losing_team_count in sorted(losers_dict.iteritems(),
+    key=lambda (losing_team, losing_team_count):
     (losing_team_count, losing_team), reverse=True):
     print("%s: %s") % (losing_team, losing_team_count)
 
 print(rtn())
 
-win_totals('coach', unique_winning_coaches, 'winning_coach_count', 
+win_totals('coach', unique_winning_coaches, 'winning_coach_count',
     winning_coach, winning_coaches, winning_coaches_dict
     )
 
 # print("coaches with most super bowl wins".upper())
 header("coaches with most super bowl wins")
 for winning_coach, winning_coach_count in sorted(
-    winning_coaches_dict.iteritems(), key=lambda 
-    (winning_coach, winning_coach_count): (winning_coach_count, winning_coach), 
+    winning_coaches_dict.iteritems(), key=lambda
+    (winning_coach, winning_coach_count): (winning_coach_count, winning_coach),
     reverse=True):
     print("%s: %s") % (winning_coach, winning_coach_count)
 
@@ -208,7 +208,7 @@ for k, v in sorted(super_bowls.items()):
 
 # print total scores in descending order
 header("total scores descending")
-for k, v in sorted(total_score_dict.iteritems(), key=lambda (k, v): (v, k), 
+for k, v in sorted(total_score_dict.iteritems(), key=lambda (k, v): (v, k),
     reverse=True):
     print("%s: %s") % (k, v)
 
