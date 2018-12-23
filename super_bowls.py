@@ -14,7 +14,7 @@ def header(a):
 
 def tally(a, b, c):
     i = 0
-    for a in b: 
+    for a in b:
         if a == c: 
             i = i + 1
     return i
