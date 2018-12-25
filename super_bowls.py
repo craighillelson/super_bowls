@@ -1,222 +1,220 @@
+"""__doc__"""
+
 # move functions to another file
 
 # imports
 import csv
 import operator
 from collections import namedtuple
-from collections import OrderedDict
 
 # define lambda and functions
-rtn = lambda: '\n'
+RTN = lambda: '\n'
 
-def header(a):
-    print a.upper()
+def header(title):
+    """ print header """
+    print title.upper()
 
-def tally(a, b, c):
+def tally(a_a, b_b, c_c):
+    """ compute total in a given category """
     i = 0
-    for a in b:
-        if a == c:
+    for a_a in b_b:
+        if a_a == c_c:
             i = i + 1
     return i
 
-def win_totals(a, b, c, d, e, g):
-    for a in sorted(b):
-        c = tally(d, e, a)
-        g[a] = c
+def win_totals(winner, lst, winner_count, d, e, g):
+    """ calculate win totals """
+    for winner in sorted(lst):
+        winner_count = tally(d, e, winner)
+        g[winner] = winner_count
 
-super_bowls = {}
+SUPER_BOWLS = {}
 
-with open('super_bowls.csv') as f:
-    f_csv = csv.reader(f)
-    headings = next(f_csv)
-    Row = namedtuple('Row', headings)
-    for r in f_csv:
-        row = Row(*r)
-        super_bowls[row.date] = [
-            row.superbowl, row.site, row.winner, row.winnerscore,
-            row.loser, row.loserscore, row.mvp, row.winningcoach,
-            row.losingcoach
+with open('SUPER_BOWLS.csv') as f:
+    F_CSV = csv.reader(f)
+    HEADINGS = next(F_CSV)
+    ROW = namedtuple('Row', HEADINGS)
+    for r in F_CSV:
+        row = ROW(*r)
+        SUPER_BOWLS[row.date] = [
+            row.superbowl, row.site, row.winner, row.winnerscore, row.loser, row.loserscore,
+            row.mvp, row.winningcoach, row.losingcoach
             ]
 
 # create list to be populated
-current_nfl_teams = []
+CURRENT_NFL_TEAMS = []
 
 # populate list of current teams
 with open('teams.csv') as f:
-    f_csv = csv.DictReader(f)
-    for row in f_csv:
+    F_CSV = csv.DictReader(f)
+    for row in F_CSV:
         team = row['team']
-        current_nfl_teams.append(team)
+        CURRENT_NFL_TEAMS.append(team)
 
 # create lists to be populated later
-mvps = []
-winners = []
-losers = []
-yet_to_win = []
-winning_coaches = []
-losing_coaches = []
-sites = []
-winnners_scores = []
-losers_scores = []
-won_and_lost = []
+MVPS = []
+WINNERS = []
+LOSERS = []
+YET_TO_WIN = []
+WINNING_COACHES = []
+LOSING_COACHES = []
+SITES = []
+WINNNERS_SCORES = []
+LOSERS_SCORES = []
+WON_AND_LOST = []
 # super_bowl_names = []
 
 # create dictionaries to be populated later
-mvps_dict = {}
-champions = {}
-winning_coaches_dict = {}
-losers_dict = {}
-losing_coaches_dict = {}
-sites_dict = {}
-total_score_dict = {}
+MVPS_DICT = {}
+CHAMPIONS = {}
+WINNING_COACHES_DICT = {}
+LOSERS_DICT = {}
+LOSING_COACHES_DICT = {}
+SITES_DICT = {}
+TOTAL_SCORE_DICT = {}
 
 # sort dictionary
-sorted_dict = sorted(super_bowls.items(), key=operator.itemgetter(0), reverse=True)
+SORTED_DICT = sorted(SUPER_BOWLS.items(), key=operator.itemgetter(0), reverse=True)
 
 # populate list
-for k, v in sorted_dict:
+for k, v in SORTED_DICT:
     super_bowl_name = v[0]
     # super_bowl_names.append(super_bowl_name)
-    site = v[1]
-    sites.append(site)
-    mvp = v[6]
-    mvps.append(mvp)
-    winner = v[2]
-    winners.append(winner)
-    loser = v[4]
-    losers.append(loser)
-    winning_coach = v[7]
-    winning_coaches.append(winning_coach)
-    losing_coach = v[8]
-    losing_coaches.append(losing_coach)
-    winner_score = v[3]
-    loser_score = v[5]
-    total_score = int(winner_score) + int(loser_score)
+    SITE = v[1]
+    SITES.append(SITE)
+    MVP = v[6]
+    MVPS.append(MVP)
+    WINNER = v[2]
+    WINNERS.append(WINNER)
+    LOSER = v[4]
+    LOSERS.append(LOSER)
+    WINNING_COACH = v[7]
+    WINNING_COACHES.append(WINNING_COACH)
+    LOSING_COACH = v[8]
+    LOSING_COACHES.append(LOSING_COACH)
+    WINNER_SCORE = v[3]
+    LOSER_SCORE = v[5]
+    TOTAL_SCORE = int(WINNER_SCORE) + int(LOSER_SCORE)
 
 # convert list to a set
-unique_mvps = set(mvps)
-unique_winners = set(winners)
-unique_winning_coaches = set(winning_coaches)
-unique_losing_teams = set(losers)
-unique_losing_coaches = set(losing_coaches)
-unique_sites = set(sites)
+UNIQUE_MVPS = set(MVPS)
+UNIQUE_WINNERS = set(WINNERS)
+UNIQUE_WINNING_COACHES = set(WINNING_COACHES)
+UNIQUE_LOSING_COACHES_TEAMS = set(LOSERS)
+UNIQUE_LOSING_COACHES = set(LOSING_COACHES)
+UNIQUE_SITES = set(SITES)
 
-print rtn()
+print RTN()
 
-# populate a dictionary with player and mvp win total
+# populate a dictionary with player and MVP win total
 # as the keys and values
-win_totals('player', unique_mvps, 'mvp_count', mvp, mvps, mvps_dict)
+win_totals('player', UNIQUE_MVPS, 'MVP_count', MVP, MVPS, MVPS_DICT)
 
-# print mvps
-header("mvps sorted alphabetically")
-for player, count in sorted(mvps_dict.items()):
+# print MVPs
+header("MVPs sorted alphabetically")
+for PLAYER, COUNT in sorted(MVPS_DICT.items()):
+    print("%s: %s") % (PLAYER, COUNT)
+
+print RTN()
+
+# print MVPs sorted by numbers of MVP trophies won
+header("MVPs sorted by number of MVP trophies won")
+for player, count in sorted(MVPS_DICT.iteritems(),
+                            key=lambda (player, count): (count, player), reverse=True):
     print("%s: %s") % (player, count)
 
-print rtn()
-
-# print mvps sorted by numbers of mvp trophies won
-header("mvps sorted by number of mvp trophies won")
-for player, count in sorted(mvps_dict.iteritems(), key=lambda (player, count):
-    (count, player), reverse=True):
-    print("%s: %s") % (player, count)
-
-print rtn()
+print RTN()
 
 # populate dictionary with teams and super bowl win total as keys and values
-win_totals('champ', unique_winners, 'winner_count', winner, winners, champions)
+win_totals('champ', UNIQUE_WINNERS, 'WINNER_count', WINNER, WINNERS, CHAMPIONS)
 
 # print teams sorted by number of times they've won the super bowl
-header("champions")
-for champ, winner_count in sorted(champions.iteritems(), key=lambda
-    (champ, winner_count): (winner_count, champ), reverse=True):
-    print("%s: %s") % (champ, winner_count)
+header("CHAMPIONS")
+for champ, WINNER_count in sorted(CHAMPIONS.iteritems(), key=lambda
+        (champ, WINNER_count): (WINNER_count, champ), reverse=True):
+    print("%s: %s") % (champ, WINNER_count)
 
-print rtn()
+print RTN()
 
-win_totals('losing_team', unique_losing_teams, 'losing_team_count', loser,
-    losers, losers_dict)
+win_totals('LOSING_TEAM', UNIQUE_LOSING_COACHES_TEAMS, 'LOSING_TEAM_COUNT', LOSER,
+           LOSERS, LOSERS_DICT)
 
 # print("losing teams".upper())
 header("losing teams")
-for losing_team, losing_team_count in sorted(losers_dict.iteritems(),
-    key=lambda (losing_team, losing_team_count):
-    (losing_team_count, losing_team), reverse=True):
-    print("%s: %s") % (losing_team, losing_team_count)
+for LOSING_TEAM, LOSING_TEAM_COUNT in sorted(LOSERS_DICT.iteritems(),
+                                             key=lambda (LOSING_TEAM, LOSING_TEAM_COUNT):
+                                             (LOSING_TEAM_COUNT, LOSING_TEAM), reverse=True):
+    print("%s: %s") % (LOSING_TEAM, LOSING_TEAM_COUNT)
 
-print rtn()
+print RTN()
 
-win_totals('coach', unique_winning_coaches, 'winning_coach_count',
-    winning_coach, winning_coaches, winning_coaches_dict
-    )
+win_totals('coach', UNIQUE_WINNING_COACHES, 'winning_coach_count', WINNING_COACH, WINNING_COACHES,
+           WINNING_COACHES_DICT)
 
 # print("coaches with most super bowl wins".upper())
 header("coaches with most super bowl wins")
-for winning_coach, winning_coach_count in sorted(
-    winning_coaches_dict.iteritems(), key=lambda
-    (winning_coach, winning_coach_count): (winning_coach_count, winning_coach),
-    reverse=True):
-    print("%s: %s") % (winning_coach, winning_coach_count)
+for WINNING_COACH, WINNING_COACH_COUNT in sorted(WINNING_COACHES_DICT.iteritems(), key=lambda
+        (winning_coach, winning_coach_count): (winning_coach_count, winning_coach), reverse=True):
+    print("%s: %s") % (WINNING_COACH, WINNING_COACH_COUNT)
 
-print rtn()
+print RTN()
 
 win_totals(
-    'coach', unique_losing_coaches, 'losing_coach_count', losing_coach,
-    losing_coaches, losing_coaches_dict
+    'coach', UNIQUE_LOSING_COACHES, 'losing_coach_count', LOSING_COACH,
+    LOSING_COACHES, LOSING_COACHES_DICT
     )
 
 # print losing coaches in descending order of losses
 header("coaches with most super bowl losses")
-for losing_coach, losing_coach_count in sorted(losing_coaches_dict.iteritems(),
-    key=lambda (losing_coach, losing_coach_count): 
-    (losing_coach_count, losing_coach), reverse=True):
-    print("%s: %s") % (losing_coach, losing_coach_count)
+for LOSING_COACH, losing_coach_count in sorted(LOSING_COACHES_DICT.iteritems(), key=lambda
+        (LOSING_COACH, losing_coach_count): (losing_coach_count, LOSING_COACH), reverse=True):
+    print("%s: %s") % (LOSING_COACH, losing_coach_count)
 
-print rtn()
+print RTN()
 
 # print list of coaches who have won and lost the game
 header("coaches who have won and lost the super bowl")
-for coach in unique_winning_coaches:
-    if coach in unique_losing_coaches:
-        print(coach)
+for coach in UNIQUE_WINNING_COACHES:
+    if coach in UNIQUE_LOSING_COACHES:
+        print coach
     else:
         pass
 
-print rtn()
+print RTN()
 
 # print teams yet to win the super bowl
 header("teams yet to win the super bowl")
-yet_to_win = set(current_nfl_teams) - set(winners)
-for team in sorted(yet_to_win):
-    print(team)
+YET_TO_WIN = set(CURRENT_NFL_TEAMS) - set(WINNERS)
+for team in sorted(YET_TO_WIN):
+    print team
 
-print rtn()
+print RTN()
 
-# print host site in descending order ranked by number of times each 
+# print host site in descending order ranked by number of times each
 # site has hosted the game
 header("host sites")
-win_totals('site', unique_sites, 'site_count', site, sites, sites_dict)
+win_totals('SITE', UNIQUE_SITES, 'site_count', SITE, SITES, SITES_DICT)
 
-for site, site_count in sorted(sites_dict.iteritems(), key=lambda 
-    (site, site_count): (site_count, site), reverse=True):
+for site, site_count in sorted(SITES_DICT.iteritems(), key=lambda (site, site_count):
+                               (site_count, site), reverse=True):
     print("%s: %s") % (site, site_count)
 
-print rtn()
+print RTN()
 
-for k, v in sorted(super_bowls.items()):
-    total_score = int(v[3]) + int(v[5])
-    total_score_dict[v[0]] = total_score
+for k, v in sorted(SUPER_BOWLS.items()):
+    TOTAL_SCORE = int(v[3]) + int(v[5])
+    TOTAL_SCORE_DICT[v[0]] = TOTAL_SCORE
 
 # print total scores in descending order
 header("total scores descending")
-for k, v in sorted(total_score_dict.iteritems(), key=lambda (k, v): (v, k),
-    reverse=True):
+for k, v in sorted(TOTAL_SCORE_DICT.iteritems(), key=lambda (k, v): (v, k), reverse=True):
     print("%s: %s") % (k, v)
 
-print rtn()
+print RTN()
 
 # print total scores in ascending order
 header("total scores ascending")
-for k, v in sorted(total_score_dict.iteritems(), key=lambda (k, v): (v, k)):
+for k, v in sorted(TOTAL_SCORE_DICT.iteritems(), key=lambda (k, v): (v, k)):
     print("%s: %s") % (k, v)
 
-print rtn()
+print RTN()
