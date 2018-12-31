@@ -14,23 +14,23 @@ def header(title):
     """ print header """
     print title.upper()
 
-def tally(a_a, b_b, c_c):
+def tally(a, b, c):
     """ compute total in a given category """
     i = 0
-    for a_a in b_b:
-        if a_a == c_c:
+    for a in b:
+        if a == c:
             i = i + 1
     return i
 
-def win_totals(winner, lst, winner_count, d, e, g):
+def win_totals(winner, lst, winner_count, mvp, mvps, mvps_dict):
     """ calculate win totals """
     for winner in sorted(lst):
-        winner_count = tally(d, e, winner)
-        g[winner] = winner_count
+        winner_count = tally(mvp, mvps, winner)
+        mvps_dict[winner] = winner_count
 
 SUPER_BOWLS = {}
 
-with open('SUPER_BOWLS.csv') as f:
+with open('super_bowls.csv') as f:
     F_CSV = csv.reader(f)
     HEADINGS = next(F_CSV)
     ROW = namedtuple('Row', HEADINGS)
@@ -40,6 +40,8 @@ with open('SUPER_BOWLS.csv') as f:
             row.superbowl, row.site, row.winner, row.winnerscore, row.loser, row.loserscore,
             row.mvp, row.winningcoach, row.losingcoach
             ]
+
+# move list of teams to another file
 
 # create list to be populated
 CURRENT_NFL_TEAMS = []
@@ -61,7 +63,8 @@ LOSING_COACHES = []
 SITES = []
 WINNNERS_SCORES = []
 LOSERS_SCORES = []
-WON_AND_LOST = []
+TEAMS_WON_AND_LOST = []
+COACHES_WON_AND_LOST = []
 # super_bowl_names = []
 
 # create dictionaries to be populated later
@@ -110,6 +113,13 @@ print RTN()
 # as the keys and values
 win_totals('player', UNIQUE_MVPS, 'MVP_count', MVP, MVPS, MVPS_DICT)
 
+# results
+header("results")
+for k, v in SORTED_DICT:
+    print "%s: %s %s %s %s" % (v[0], v[2], v[3], v[4], v[5])
+
+print RTN()
+
 # print MVPs
 header("MVPs sorted alphabetically")
 for PLAYER, COUNT in sorted(MVPS_DICT.items()):
@@ -144,7 +154,7 @@ header("losing teams")
 for LOSING_TEAM, LOSING_TEAM_COUNT in sorted(LOSERS_DICT.iteritems(),
                                              key=lambda (LOSING_TEAM, LOSING_TEAM_COUNT):
                                              (LOSING_TEAM_COUNT, LOSING_TEAM), reverse=True):
-    print("%s: %s") % (LOSING_TEAM, LOSING_TEAM_COUNT)
+    print "%s: %s" % (LOSING_TEAM, LOSING_TEAM_COUNT)
 
 print RTN()
 
@@ -177,8 +187,11 @@ header("coaches who have won and lost the super bowl")
 for coach in UNIQUE_WINNING_COACHES:
     if coach in UNIQUE_LOSING_COACHES:
         print coach
+        COACHES_WON_AND_LOST.append(coach)
     else:
         pass
+
+QTY_COACHES_WON_AND_LOST = len(COACHES_WON_AND_LOST)
 
 print RTN()
 
@@ -197,7 +210,7 @@ win_totals('SITE', UNIQUE_SITES, 'site_count', SITE, SITES, SITES_DICT)
 
 for site, site_count in sorted(SITES_DICT.iteritems(), key=lambda (site, site_count):
                                (site_count, site), reverse=True):
-    print("%s: %s") % (site, site_count)
+    print "%s: %s" % (site, site_count)
 
 print RTN()
 
@@ -208,13 +221,13 @@ for k, v in sorted(SUPER_BOWLS.items()):
 # print total scores in descending order
 header("total scores descending")
 for k, v in sorted(TOTAL_SCORE_DICT.iteritems(), key=lambda (k, v): (v, k), reverse=True):
-    print("%s: %s") % (k, v)
+    print "%s: %s" % (k, v)
 
 print RTN()
 
 # print total scores in ascending order
 header("total scores ascending")
 for k, v in sorted(TOTAL_SCORE_DICT.iteritems(), key=lambda (k, v): (v, k)):
-    print("%s: %s") % (k, v)
+    print "%s: %s" % (k, v)
 
 print RTN()
