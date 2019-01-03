@@ -8,17 +8,17 @@ import operator
 from collections import namedtuple
 
 # define lambda and functions
-RTN = lambda: '\n'
+RTN = lambda: "\n"
 
 def header(title):
     """ print header """
     print title.upper()
 
-def tally(a, b, c):
+def tally(sb_mvp, sb_mvps, player_selected):
     """ compute total in a given category """
     i = 0
-    for a in b:
-        if a == c:
+    for sb_mvp in sb_mvps:
+        if sb_mvp == player_selected:
             i = i + 1
     return i
 
@@ -65,7 +65,6 @@ WINNNERS_SCORES = []
 LOSERS_SCORES = []
 TEAMS_WON_AND_LOST = []
 COACHES_WON_AND_LOST = []
-# super_bowl_names = []
 
 # create dictionaries to be populated later
 MVPS_DICT = {}
@@ -99,7 +98,7 @@ for k, v in SORTED_DICT:
     LOSER_SCORE = v[5]
     TOTAL_SCORE = int(WINNER_SCORE) + int(LOSER_SCORE)
 
-# convert list to a set
+# convert lists to a sets
 UNIQUE_MVPS = set(MVPS)
 UNIQUE_WINNERS = set(WINNERS)
 UNIQUE_WINNING_COACHES = set(WINNING_COACHES)
@@ -109,8 +108,7 @@ UNIQUE_SITES = set(SITES)
 
 print RTN()
 
-# populate a dictionary with player and MVP win total
-# as the keys and values
+# populate a dictionary with player and MVP win total as the keys and values
 win_totals('player', UNIQUE_MVPS, 'MVP_count', MVP, MVPS, MVPS_DICT)
 
 # results
