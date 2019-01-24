@@ -14,6 +14,7 @@ def header(title):
     """ print header """
     print title.upper()
 
+
 def tally(sb_mvp, sb_mvps, player_selected):
     """ compute total in a given category """
     i = 0
@@ -21,6 +22,7 @@ def tally(sb_mvp, sb_mvps, player_selected):
         if sb_mvp == player_selected:
             i = i + 1
     return i
+
 
 def win_totals(winner, lst, winner_count, mvp, mvps, mvps_dict):
     """ calculate win totals """
