@@ -101,15 +101,13 @@ print_totals(TEAM_APPEARANCES)
 
 header("teams yet to appear")
 YET_TO_APPEAR = set(CURRENT_TEAMS) - set(APPEARED)
-TEAMS_YET_TO_APPEAR = list(YET_TO_APPEAR)
-for team in sorted(TEAMS_YET_TO_APPEAR):
+for team in sorted(YET_TO_APPEAR):
     print(team)
 
 print(RTN())
 
 header("teams yet to win")
 YET_TO_WIN = set(CURRENT_TEAMS) - set(WINNERS)
-TEAMS_YET_TO_WIN = YET_TO_WIN
 for team in sorted(YET_TO_WIN):
     print(team)
 
