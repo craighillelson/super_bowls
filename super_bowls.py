@@ -4,21 +4,28 @@
 import csv
 from collections import namedtuple
 
-
 # define lambda and functions
 RTN = lambda: "\n"
 
 SUPER_BOWLS = {}
-UNIQUE_WINNERS_TOTALS = {}
-UNIQUE_LOSERS_TOTALS = {}
-UNIQUE_MVPS_TOTALS = {}
-UNIQUE_WINNING_COACHES = {}
-UNIQUE_LOSING_COACHES = {}
+RESULTS = {}
 UPSETS = {}
+POINT_TOTAL = {}
+FINAL_SCORE_MARGIN = {}
+MVPS_TOTALS = {}
+TEAM_APPEARANCES = {}
+TEAM_LOSS_TOTALS = {}
+TEAM_WIN_TOTALS = {}
+COACH_LOSS_TOTALS = {}
+COACH_WIN_TOTALS = {}
 
-CURRENT_TEAMS = []
 WINNERS = []
+LOSERS = []
+MVPS = []
+COACHES_WON = []
+COACHES_LOST = []
 
+# import csv and populate a dictionary
 with open('super_bowls.csv') as f:
     F_CSV = csv.reader(f)
     HEADINGS = next(F_CSV)
@@ -42,120 +49,104 @@ def header(title):
     print(title.upper())
 
 
-def count_(lst, count_int):
-    """ count number of occurances in a list """
-    # change name of function to count_
-    lst = []
-    lst = [lst.append(item[count_int]) for s_b, item in SUPER_BOWLS.items()]
-    return lst
+def count_(lst_, dct_):
+    """ tally wins or losses """
+    for sb_team in lst_:
+        dct_[sb_team] = lst_.count(sb_team)
 
 
-def add_to_dct(a_lst, dct):
-    """ add values to dictionary """
-    for var in set(a_lst):
-        dct[var] = a_lst.count(var)
-
-
-def print_var_total(dct):
-    """ print contents of dictionary sorted by values """
-    for k_k, v_v in sorted(dct.items(), key=lambda x: x[1], reverse=True):
-        print(k_k, v_v)
+def print_totals(category):
+    """ print total wins or losses """
+    for player_or_team, win_or_loss_total in sorted(category.items(),
+                                                    key=lambda x: x[1],
+                                                    reverse=True):
+        print(player_or_team, win_or_loss_total)
     print(RTN())
 
 
-def print_totals(a_a, b_b, c_c, d_d):
-    """ print totals in a given category """
-    add_to_dct(a_a, b_b)
-    header(c_c)
-    print_var_total(d_d)
+def score_math(final_score):
+    """ run calculations on score """
+    for sb_number, total_or_diff in sorted(final_score.items(),
+                                           key=lambda x: x[1], reverse=True):
+        print(f"Super Bowl {sb_number}: {total_or_diff}")
+    print(RTN())
 
 
-def print_members(a_a):
-    """ print contents of a list """
-    for member in a_a:
-        print(member)
-
-
-def calculate(output, calc):
-    """ run calculations based on the final score """
-    for v_v in SUPER_BOWLS.items():
-        s_b = v_v[0]
-        output = calc
-        print(f"{s_b}: {output}")
-
-# populate a list with the output of a given function
-WINNERS_LST = count_("winners", 2)
-LOSERS_LST = count_("losers", 4)
-MVPS_LST = count_("mvps", 6)
-WINNING_COACHES_LST = count_("winning_coaches", 7)
-LOSING_COACHES_LST = count_("losing_coaches", 8)
+# loop through dictionary and organize contents
+for k, v in SUPER_BOWLS.items():
+    RESULTS[v[0]] = v[2], v[3], v[4], v[5]
+    team_appearances = (v[2], v[4])
+    WINNERS.append(v[2])
+    LOSERS.append(v[4])
+    APPEARED = WINNERS + LOSERS
+    MVPS.append(v[6])
+    COACHES_WON.append(v[7])
+    COACHES_LOST.append(v[8])
+    spread = int(v[3]) - int(v[5])
+    FINAL_SCORE_MARGIN[v[0]] = spread
+    combined_score = int(v[3]) + int(v[5])
+    POINT_TOTAL[v[0]] = combined_score
 
 print(RTN())
 
-print_totals(WINNERS_LST, UNIQUE_WINNERS_TOTALS, "teams, wins",
-             UNIQUE_WINNERS_TOTALS)
-print_totals(LOSERS_LST, UNIQUE_LOSERS_TOTALS, "teams, losses",
-             UNIQUE_LOSERS_TOTALS)
+header("results")
+for k, v in RESULTS.items():
+    print(f"Super Bowl {k}: {v[0]}, {v[1]}, {v[2]}, {v[3]}")
 
-# teams that have appeared
-header("teams that have won and lost")
-W_L = UNIQUE_WINNERS_TOTALS.keys() & UNIQUE_LOSERS_TOTALS.keys()
-for team in W_L:
+print(RTN())
+
+header("appearances")
+count_(APPEARED, TEAM_APPEARANCES)
+print_totals(TEAM_APPEARANCES)
+
+header("teams yet to appear")
+YET_TO_APPEAR = set(CURRENT_TEAMS) - set(APPEARED)
+TEAMS_YET_TO_APPEAR = list(YET_TO_APPEAR)
+for team in sorted(TEAMS_YET_TO_APPEAR):
     print(team)
 
 print(RTN())
 
-header("teams that have appeared")
-APPEARED = UNIQUE_WINNERS_TOTALS.keys() | UNIQUE_LOSERS_TOTALS.keys()
-print_members(APPEARED)
+header("teams yet to win")
+YET_TO_WIN = set(CURRENT_TEAMS) - set(WINNERS)
+TEAMS_YET_TO_WIN = YET_TO_WIN
+for team in sorted(YET_TO_WIN):
+    print(team)
 
 print(RTN())
 
-header("current teams yet to appear")
-YET_TO_APPEAR = [team
-                 for team in CURRENT_TEAMS
-                 if team not in APPEARED]
-print_members(YET_TO_APPEAR)
+header("team wins")
+count_(WINNERS, TEAM_WIN_TOTALS)
+print_totals(TEAM_WIN_TOTALS)
+
+header("team losses")
+count_(LOSERS, TEAM_LOSS_TOTALS)
+print_totals(TEAM_LOSS_TOTALS)
+
+header("mvps")
+count_(MVPS, MVPS_TOTALS)
+print_totals(MVPS_TOTALS)
+
+header("winning coaches")
+count_(COACHES_WON, COACH_WIN_TOTALS)
+print_totals(COACH_WIN_TOTALS)
+
+header("losing coaches")
+count_(COACHES_LOST, COACH_LOSS_TOTALS)
+print_totals(COACH_LOSS_TOTALS)
+
+header("coaches who've won and lost")
+COACHES_WON_AND_LOST = set(COACHES_WON) & set(COACHES_LOST)
+for coach in sorted(COACHES_WON_AND_LOST):
+    print(coach)
 
 print(RTN())
 
-header("teams that haven't won the game")
-WINNERS = [k for k, v in UNIQUE_WINNERS_TOTALS.items()]
-HAVE_NOT_WON = [team for team in CURRENT_TEAMS
-                if team not in WINNERS]
-print_members(HAVE_NOT_WON)
-
-print(RTN())
-
-print_totals(MVPS_LST, UNIQUE_MVPS_TOTALS, "mvps", UNIQUE_MVPS_TOTALS)
-print_totals(WINNING_COACHES_LST, UNIQUE_WINNING_COACHES, "coaches, wins",
-             UNIQUE_WINNING_COACHES)
-print_totals(LOSING_COACHES_LST, UNIQUE_LOSING_COACHES, "coaches, losses",
-             UNIQUE_LOSING_COACHES)
-
-# coaches who've won and lost the game
-header("coaches who have won and lost the super bowl")
-COACHES_W_L = UNIQUE_WINNING_COACHES.keys() & UNIQUE_LOSING_COACHES.keys()
-print_members(COACHES_W_L)
-
-print(RTN())
-
-# highest score and lowest score
 header("total score")
-for k, v in sorted(SUPER_BOWLS.items()):
-    sb = v[0]
-    total_score = int(v[3]) + int(v[5])
-    print(f"{sb}: {total_score}")
+score_math(POINT_TOTAL)
 
-print(RTN())
-
-header("final score spreads")
-for k, v in SUPER_BOWLS.items():
-    sb = v[0]
-    spread = int(v[3]) - int(v[5])
-    print(f"{sb}: {spread}")
-
-print(RTN())
+header("final score margin")
+score_math(FINAL_SCORE_MARGIN)
 
 header("upsets")
 UPSETS = {v[0]: [v[2], float(v[10])]
@@ -164,6 +155,6 @@ UPSETS = {v[0]: [v[2], float(v[10])]
           and v[2] != v[9]}
 
 for k, v in sorted(UPSETS.items(), key=lambda x: x[1][1]):
-    print(f"Super Bowl {k}, {v[0]}, {v[1]}")
+    print(f"Super Bowl {k}:, {v[0]}, {v[1]}")
 
 print(RTN())
