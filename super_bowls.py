@@ -49,7 +49,7 @@ def header(title):
     print(title.upper())
 
 
-def count_(lst_, dct_):
+def count(lst_, dct_):
     """ tally wins or losses """
     for sb_team in lst_:
         dct_[sb_team] = lst_.count(sb_team)
@@ -96,7 +96,7 @@ for k, v in RESULTS.items():
 print(RTN())
 
 header("appearances")
-count_(APPEARED, TEAM_APPEARANCES)
+count(APPEARED, TEAM_APPEARANCES)
 print_totals(TEAM_APPEARANCES)
 
 header("teams yet to appear")
@@ -116,23 +116,23 @@ for team in sorted(YET_TO_WIN):
 print(RTN())
 
 header("team wins")
-count_(WINNERS, TEAM_WIN_TOTALS)
+count(WINNERS, TEAM_WIN_TOTALS)
 print_totals(TEAM_WIN_TOTALS)
 
 header("team losses")
-count_(LOSERS, TEAM_LOSS_TOTALS)
+count(LOSERS, TEAM_LOSS_TOTALS)
 print_totals(TEAM_LOSS_TOTALS)
 
 header("mvps")
-count_(MVPS, MVPS_TOTALS)
+count(MVPS, MVPS_TOTALS)
 print_totals(MVPS_TOTALS)
 
 header("winning coaches")
-count_(COACHES_WON, COACH_WIN_TOTALS)
+count(COACHES_WON, COACH_WIN_TOTALS)
 print_totals(COACH_WIN_TOTALS)
 
 header("losing coaches")
-count_(COACHES_LOST, COACH_LOSS_TOTALS)
+count(COACHES_LOST, COACH_LOSS_TOTALS)
 print_totals(COACH_LOSS_TOTALS)
 
 header("coaches who've won and lost")
