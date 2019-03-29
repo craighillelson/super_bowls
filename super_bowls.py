@@ -33,9 +33,9 @@ with open('super_bowls.csv') as f:
     for r in F_CSV:
         row = ROW(*r)
         SUPER_BOWLS[row.date] = [
-            row.superbowl, row.site, row.winner, row.winnerscore, row.loser,
-            row.loserscore, row.mvp, row.winningcoach, row.losingcoach,
-            row.favorite, row.line
+            row.superbowl, row.site, row.city, row.winner, row.winnerscore,
+            row.loser, row.loserscore, row.mvp, row.winningcoach,
+            row.losingcoach, row.favorite, row.line,
             ]
 
 # populate list of current teams
@@ -74,17 +74,17 @@ def score_math(final_score):
 
 # loop through dictionary and organize contents
 for k, v in SUPER_BOWLS.items():
-    RESULTS[v[0]] = v[2], v[3], v[4], v[5]
-    team_appearances = (v[2], v[4])
-    WINNERS.append(v[2])
-    LOSERS.append(v[4])
+    RESULTS[v[0]] = v[3], v[4], v[5], v[6]
+    team_appearances = (v[3], v[5])
+    WINNERS.append(v[3])
+    LOSERS.append(v[5])
     APPEARED = WINNERS + LOSERS
-    MVPS.append(v[6])
-    COACHES_WON.append(v[7])
-    COACHES_LOST.append(v[8])
-    spread = int(v[3]) - int(v[5])
+    MVPS.append(v[7])
+    COACHES_WON.append(v[8])
+    COACHES_LOST.append(v[9])
+    spread = int(v[4]) - int(v[6])
     FINAL_SCORE_MARGIN[v[0]] = spread
-    combined_score = int(v[3]) + int(v[5])
+    combined_score = int(v[4]) + int(v[6])
     POINT_TOTAL[v[0]] = combined_score
 
 print(RTN())
@@ -147,12 +147,12 @@ header("final score margin")
 score_math(FINAL_SCORE_MARGIN)
 
 header("upsets")
-UPSETS = {v[0]: [v[2], float(v[10])]
+UPSETS = {v[0]: [v[3], float(v[11])]
           for k, v in SUPER_BOWLS.items()
-          if v[9] != "Pick 'em"
-          and v[2] != v[9]}
+          if v[10] != "Pick 'em"
+          and v[3] != v[10]}
 
 for k, v in sorted(UPSETS.items(), key=lambda x: x[1][1]):
-    print(f"Super Bowl {k}:, {v[0]}, {v[1]}")
+    print(f"Super Bowl {k}: {v[0]}, {v[1]}")
 
 print(RTN())
