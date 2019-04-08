@@ -90,8 +90,9 @@ for k, v in SUPER_BOWLS.items():
 print(RTN())
 
 header("results")
-for k, v in RESULTS.items():
-    print(f"Super Bowl {k}: {v[0]}, {v[1]}, {v[2]}, {v[3]}")
+for game, result in RESULTS.items():
+    print(f"Super Bowl {game}: {result[0]}, {result[1]}, {result[2]}, "\
+          f"{result[3]}")
 
 print(RTN())
 
