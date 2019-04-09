@@ -18,12 +18,14 @@ TEAM_LOSS_TOTALS = {}
 TEAM_WIN_TOTALS = {}
 COACH_LOSS_TOTALS = {}
 COACH_WIN_TOTALS = {}
+HOST_CITIES_TOTALS = {}
 
 WINNERS = []
 LOSERS = []
 MVPS = []
 COACHES_WON = []
 COACHES_LOST = []
+HOST_CITIES = []
 
 # import csv and populate a dictionary
 with open('super_bowls.csv') as f:
@@ -86,6 +88,7 @@ for k, v in SUPER_BOWLS.items():
     FINAL_SCORE_MARGIN[v[0]] = spread
     combined_score = int(v[4]) + int(v[6])
     POINT_TOTAL[v[0]] = combined_score
+    HOST_CITIES.append(v[2])
 
 print(RTN())
 
@@ -155,5 +158,11 @@ UPSETS = {v[0]: [v[3], float(v[11])]
 
 for k, v in sorted(UPSETS.items(), key=lambda x: x[1][1]):
     print(f"Super Bowl {k}: {v[0]}, {v[1]}")
+
+print(RTN())
+
+header("host cities")
+count(HOST_CITIES, HOST_CITIES_TOTALS)
+print_totals(HOST_CITIES_TOTALS)
 
 print(RTN())
