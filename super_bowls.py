@@ -156,8 +156,8 @@ UPSETS = {v[0]: [v[3], float(v[11])]
           if v[10] != "Pick 'em"
           and v[3] != v[10]}
 
-for k, v in sorted(UPSETS.items(), key=lambda x: x[1][1]):
-    print(f"Super Bowl {k}: {v[0]}, {v[1]}")
+for team, line in sorted(UPSETS.items(), key=lambda x: x[1][1]):
+    print(f"Super Bowl {team}: {line[0]}, {line[1]}")
 
 print(RTN())
 
