@@ -19,6 +19,7 @@ TEAM_WIN_TOTALS = {}
 COACH_LOSS_TOTALS = {}
 COACH_WIN_TOTALS = {}
 HOST_CITIES_TOTALS = {}
+SITES_TOTALS = {}
 
 WINNERS = []
 LOSERS = []
@@ -26,6 +27,7 @@ MVPS = []
 COACHES_WON = []
 COACHES_LOST = []
 HOST_CITIES = []
+SITES = []
 
 # import csv and populate a dictionary
 with open('super_bowls.csv') as f:
@@ -75,20 +77,22 @@ def score_math(final_score):
 
 
 # loop through dictionary and organize contents
-for k, v in SUPER_BOWLS.items():
-    RESULTS[v[0]] = v[3], v[4], v[5], v[6]
-    team_appearances = (v[3], v[5])
-    WINNERS.append(v[3])
-    LOSERS.append(v[5])
+for sb, sb_attribute in SUPER_BOWLS.items():
+    RESULTS[sb_attribute[0]] = sb_attribute[3], sb_attribute[4], \
+                               sb_attribute[5], sb_attribute[6]
+    team_appearances = (sb_attribute[3], sb_attribute[5])
+    WINNERS.append(sb_attribute[3])
+    LOSERS.append(sb_attribute[5])
     APPEARED = WINNERS + LOSERS
-    MVPS.append(v[7])
-    COACHES_WON.append(v[8])
-    COACHES_LOST.append(v[9])
-    spread = int(v[4]) - int(v[6])
-    FINAL_SCORE_MARGIN[v[0]] = spread
-    combined_score = int(v[4]) + int(v[6])
-    POINT_TOTAL[v[0]] = combined_score
-    HOST_CITIES.append(v[2])
+    MVPS.append(sb_attribute[7])
+    COACHES_WON.append(sb_attribute[8])
+    COACHES_LOST.append(sb_attribute[9])
+    spread = int(sb_attribute[4]) - int(sb_attribute[6])
+    FINAL_SCORE_MARGIN[sb_attribute[0]] = spread
+    combined_score = int(sb_attribute[4]) + int(sb_attribute[6])
+    POINT_TOTAL[sb_attribute[0]] = combined_score
+    HOST_CITIES.append(sb_attribute[2])
+    SITES.append(sb_attribute[1])
 
 print(RTN())
 
@@ -151,18 +155,20 @@ header("final score margin")
 score_math(FINAL_SCORE_MARGIN)
 
 header("upsets")
-UPSETS = {v[0]: [v[3], float(v[11])]
-          for k, v in SUPER_BOWLS.items()
-          if v[10] != "Pick 'em"
-          and v[3] != v[10]}
+UPSETS = {sb_attribute[0]: [sb_attribute[3], float(sb_attribute[11])]
+          for sb, sb_attribute in SUPER_BOWLS.items()
+          if sb_attribute[10] != "Pick 'em"
+          and sb_attribute[3] != sb_attribute[10]}
 
-for team, line in sorted(UPSETS.items(), key=lambda x: x[1][1]):
-    print(f"Super Bowl {team}: {line[0]}, {line[1]}")
+for sb, sb_attribute in sorted(UPSETS.items(), key=lambda x: x[1][1]):
+    print(f"Super Bowl {sb}: {sb_attribute[0]}, +{sb_attribute[1] * -1}")
 
 print(RTN())
+
+header("sites")
+count(SITES, SITES_TOTALS)
+print_totals(SITES_TOTALS)
 
 header("host cities")
 count(HOST_CITIES, HOST_CITIES_TOTALS)
 print_totals(HOST_CITIES_TOTALS)
-
-print(RTN())
