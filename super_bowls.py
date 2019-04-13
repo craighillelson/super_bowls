@@ -2,6 +2,7 @@
 
 # imports
 import csv
+import operator
 from collections import namedtuple
 
 # define lambda and functions
@@ -30,7 +31,7 @@ HOST_CITIES = []
 SITES = []
 
 # import csv and populate a dictionary
-with open('super_bowls.csv') as f:
+with open('csvs/super_bowls.csv') as f:
     F_CSV = csv.reader(f)
     HEADINGS = next(F_CSV)
     ROW = namedtuple('Row', HEADINGS)
@@ -43,7 +44,7 @@ with open('super_bowls.csv') as f:
             ]
 
 # populate list of current teams
-with open('teams.csv') as f:
+with open('csvs/teams.csv') as f:
     F_CSV = csv.DictReader(f)
     for row in F_CSV:
         CURRENT_TEAMS = [row['team'] for row in F_CSV]
@@ -61,10 +62,10 @@ def count(lst_, dct_):
 
 def print_totals(category):
     """ print total wins or losses """
-    for player_or_team, win_or_loss_total in sorted(category.items(),
-                                                    key=lambda x: x[1],
-                                                    reverse=True):
-        print(player_or_team, win_or_loss_total)
+    sorted_totals = sorted(category.items(), key=operator.itemgetter(0))
+    for unit, total in sorted(sorted_totals, key=operator.itemgetter(1),
+                              reverse=True):
+        print(unit, total)
     print(RTN())
 
 
@@ -98,7 +99,7 @@ print(RTN())
 
 header("results")
 for game, result in RESULTS.items():
-    print(f"Super Bowl {game}: {result[0]}, {result[1]}, {result[2]}, "\
+    print(f"Super Bowl {game}: {result[0]} {result[1]}, {result[2]} "\
           f"{result[3]}")
 
 print(RTN())
