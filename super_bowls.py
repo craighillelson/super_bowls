@@ -75,6 +75,16 @@ functions.yet_to_appear_or_win("teams yet to win", YET_TO_WIN, WINNERS)
 functions.tally_and_print("team wins", WINNERS, TEAM_WIN_TOTALS)
 functions.tally_and_print("team losses", LOSERS, TEAM_LOSS_TOTALS)
 functions.tally_and_print("mvps", MVPS, MVPS_TOTALS)
+
+functions.header("players to win multiple mvps")
+for player, number_of_mvp_trophies in sorted(MVPS_TOTALS.items(),
+                                             key=lambda x: x[1], reverse=True):
+    if number_of_mvp_trophies > 1:
+        print(player, number_of_mvp_trophies)
+    else:
+        pass
+print(functions.RTN())
+
 functions.tally_and_print("winning coaches", COACHES_WON, COACH_WIN_TOTALS)
 functions.tally_and_print("losing coaches", COACHES_LOST, COACH_LOSS_TOTALS)
 
