@@ -3,6 +3,7 @@
 # imports
 from collections import namedtuple
 import csv
+import operator
 import functions
 
 SUPER_BOWLS = {}
@@ -77,8 +78,10 @@ functions.tally_and_print("team losses", LOSERS, TEAM_LOSS_TOTALS)
 functions.tally_and_print("mvps", MVPS, MVPS_TOTALS)
 
 functions.header("players to win multiple mvps")
-for player, number_of_mvp_trophies in sorted(MVPS_TOTALS.items(),
-                                             key=lambda x: x[1], reverse=True):
+sorted_mvp_totals = sorted(MVPS_TOTALS.items(), key=operator.itemgetter(0))
+for player, number_of_mvp_trophies in sorted(sorted_mvp_totals,
+                                             key=operator.itemgetter(1),
+                                             reverse=True):
     if number_of_mvp_trophies > 1:
         print(player, number_of_mvp_trophies)
     else:
