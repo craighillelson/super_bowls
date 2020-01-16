@@ -77,15 +77,9 @@ functions.tally_and_print('team wins', WINNERS, TEAM_WIN_TOTALS)
 functions.tally_and_print('team losses', LOSERS, TEAM_LOSS_TOTALS)
 functions.tally_and_print('mvps', MVPS, MVPS_TOTALS)
 
-<<<<<<< Updated upstream
-functions.header("players to win multiple mvps")
-sorted_mvp_totals = sorted(MVPS_TOTALS.items(), key=operator.itemgetter(0))
-for player, number_of_mvp_trophies in sorted(sorted_mvp_totals,
-=======
 functions.header('players to win multiple mvps')
 SORTED_MVP_TOTALS = sorted(MVPS_TOTALS.items(), key=operator.itemgetter(0))
 for player, number_of_mvp_trophies in sorted(SORTED_MVP_TOTALS,
->>>>>>> Stashed changes
                                              key=operator.itemgetter(1),
                                              reverse=True):
     if number_of_mvp_trophies > 1:
