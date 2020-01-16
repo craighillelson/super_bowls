@@ -64,22 +64,28 @@ for sb, sb_attribute in SUPER_BOWLS.items():
 
 print(functions.RTN())
 
-functions.header("results")
+functions.header('results')
 for game, result in RESULTS.items():
-    print(f"Super Bowl {game}: {result[0]} {result[1]}, {result[2]} "\
-          f"{result[3]}")
+    print(f'Super Bowl {game}: {result[0]} {result[1]}, {result[2]} '\
+          f'{result[3]}')
 print(functions.RTN())
 
-functions.tally_and_print("appearances", APPEARED, TEAM_APPEARANCES)
-functions.yet_to_appear_or_win("teams yet to appear", YET_TO_APPEAR, APPEARED)
-functions.yet_to_appear_or_win("teams yet to win", YET_TO_WIN, WINNERS)
-functions.tally_and_print("team wins", WINNERS, TEAM_WIN_TOTALS)
-functions.tally_and_print("team losses", LOSERS, TEAM_LOSS_TOTALS)
-functions.tally_and_print("mvps", MVPS, MVPS_TOTALS)
+functions.tally_and_print('appearances', APPEARED, TEAM_APPEARANCES)
+functions.yet_to_appear_or_win('teams yet to appear', YET_TO_APPEAR, APPEARED)
+functions.yet_to_appear_or_win('teams yet to win', YET_TO_WIN, WINNERS)
+functions.tally_and_print('team wins', WINNERS, TEAM_WIN_TOTALS)
+functions.tally_and_print('team losses', LOSERS, TEAM_LOSS_TOTALS)
+functions.tally_and_print('mvps', MVPS, MVPS_TOTALS)
 
+<<<<<<< Updated upstream
 functions.header("players to win multiple mvps")
 sorted_mvp_totals = sorted(MVPS_TOTALS.items(), key=operator.itemgetter(0))
 for player, number_of_mvp_trophies in sorted(sorted_mvp_totals,
+=======
+functions.header('players to win multiple mvps')
+SORTED_MVP_TOTALS = sorted(MVPS_TOTALS.items(), key=operator.itemgetter(0))
+for player, number_of_mvp_trophies in sorted(SORTED_MVP_TOTALS,
+>>>>>>> Stashed changes
                                              key=operator.itemgetter(1),
                                              reverse=True):
     if number_of_mvp_trophies > 1:
@@ -88,8 +94,8 @@ for player, number_of_mvp_trophies in sorted(sorted_mvp_totals,
         pass
 print(functions.RTN())
 
-functions.tally_and_print("winning coaches", COACHES_WON, COACH_WIN_TOTALS)
-functions.tally_and_print("losing coaches", COACHES_LOST, COACH_LOSS_TOTALS)
+functions.tally_and_print('winning coaches', COACHES_WON, COACH_WIN_TOTALS)
+functions.tally_and_print('losing coaches', COACHES_LOST, COACH_LOSS_TOTALS)
 
 functions.header("coaches who've won and lost")
 COACHES_WON_AND_LOST = set(COACHES_WON) & set(COACHES_LOST)
@@ -97,20 +103,20 @@ for coach in sorted(COACHES_WON_AND_LOST):
     print(coach)
 print(functions.RTN())
 
-functions.score_math("total score", POINT_TOTAL)
-functions.score_math("final score margin", FINAL_SCORE_MARGIN)
+functions.score_math('total score', POINT_TOTAL)
+functions.score_math('final score margin', FINAL_SCORE_MARGIN)
 
 functions.header("upsets")
 UPSETS = {
     sb_attribute[0]: [sb_attribute[3], float(sb_attribute[11])]
     for sb, sb_attribute in SUPER_BOWLS.items()
-    if sb_attribute[10] != "Pick 'em"
+    if sb_attribute[10] != 'Pick \'em'
     and sb_attribute[3] != sb_attribute[10]
     }
 
 for sb, sb_attribute in sorted(UPSETS.items(), key=lambda x: x[1][1]):
-    print(f"Super Bowl {sb}: {sb_attribute[0]}, +{sb_attribute[1] * -1}")
+    print(f'Super Bowl {sb}: {sb_attribute[0]}, +{sb_attribute[1] * -1}')
 print(functions.RTN())
 
-functions.tally_and_print("sites", SITES, SITES_TOTALS)
-functions.tally_and_print("host cities", HOST_CITIES, HOST_CITIES_TOTALS)
+functions.tally_and_print('sites', SITES, SITES_TOTALS)
+functions.tally_and_print('host cities', HOST_CITIES, HOST_CITIES_TOTALS)
