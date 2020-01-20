@@ -70,8 +70,12 @@ print(functions.RTN())
 # results
 functions.header('results')
 for game, result in RESULTS.items():
-    print(f'Super Bowl {game}: {result[0]} {result[1]} - '
-          f'{result[2]} {result[3]}')
+    winners = result[0]
+    winners_point_total = result[1]
+    losers = result[2]
+    losers_point_total = result[3]
+    print(f'Super Bowl {game}: {winners} {winners_point_total} - '
+          f'{losers} {losers_point_total}')
 print(functions.RTN())
 
 # appearances
