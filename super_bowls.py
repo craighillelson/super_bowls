@@ -151,9 +151,11 @@ functions.score_math('final score margin', FINAL_SCORE_MARGIN)
 
 # upsets
 functions.header('upsets')
-for super_bowl, team_spread in sorted(UPSETS.items(), key=lambda x: x[1][1]):
-    team = team_spread[0]
-    print(f'Super Bowl {super_bowl}: {team} +{team_spread[1] * -1}')
+for super_bowl, team_line in sorted(UPSETS.items(), key=lambda x: x[1][1]):
+    team = team_line[0]
+    line = team_line[1] * -1
+    betting_line = '+' + str(line)
+    print(f'Super Bowl {super_bowl}: {team} {betting_line}')
 
 print(functions.RTN())
 
