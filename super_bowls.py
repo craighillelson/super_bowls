@@ -6,6 +6,7 @@ import csv
 import operator
 import functions
 
+# dictionaries
 SUPER_BOWLS = {}
 RESULTS = {}
 UPSETS = {}
@@ -19,17 +20,21 @@ COACH_LOSS_TOTALS = {}
 COACH_WIN_TOTALS = {}
 HOST_CITIES_TOTALS = {}
 SITES_TOTALS = {}
+MATCH_UPS_DCT = {}
 
+# lists
 YET_TO_APPEAR = []
 YET_TO_WIN = []
 WINNERS = []
 LOSERS = []
+MATCH_UPS = []
 MVPS = []
 COACHES_WON = []
 COACHES_LOST = []
 HOST_CITIES = []
 SITES = []
 CURRENT_TEAMS = []
+OPPONENTS = []
 
 # import csv and populate a dictionary
 with open('csvs/super_bowls.csv') as f:
@@ -38,45 +43,78 @@ with open('csvs/super_bowls.csv') as f:
     ROW = namedtuple('Row', HEADINGS)
     for r in F_CSV:
         row = ROW(*r)
-        SUPER_BOWLS[row.date] = [
-            row.superbowl, row.site, row.city, row.winner, row.winnerscore,
-            row.loser, row.loserscore, row.mvp, row.winningcoach,
-            row.losingcoach, row.favorite, row.line,
-            ]
-
-# loop through dictionary and organize contents
-for sb, sb_attribute in SUPER_BOWLS.items():
-    RESULTS[sb_attribute[0]] = sb_attribute[3], sb_attribute[4], \
-                               sb_attribute[5], sb_attribute[6]
-    team_appearances = (sb_attribute[3], sb_attribute[5])
-    WINNERS.append(sb_attribute[3])
-    LOSERS.append(sb_attribute[5])
-    APPEARED = WINNERS + LOSERS
-    MVPS.append(sb_attribute[7])
-    COACHES_WON.append(sb_attribute[8])
-    COACHES_LOST.append(sb_attribute[9])
-    spread = int(sb_attribute[4]) - int(sb_attribute[6])
-    FINAL_SCORE_MARGIN[sb_attribute[0]] = spread
-    combined_score = int(sb_attribute[4]) + int(sb_attribute[6])
-    POINT_TOTAL[sb_attribute[0]] = combined_score
-    HOST_CITIES.append(sb_attribute[2])
-    SITES.append(sb_attribute[1])
+        RESULTS[row.superbowl] = [row.winner, row.winnerscore, row.loser,
+                                  row.loserscore]
+        match_up = row.winner, row.loser
+        MATCH_UPS.append(match_up)
+        WINNERS.append(row.winner)
+        LOSERS.append(row.loser)
+        APPEARED = WINNERS + LOSERS
+        MVPS.append(row.mvp)
+        COACHES_WON.append(row.winningcoach)
+        COACHES_LOST.append(row.losingcoach)
+        HOST_CITIES.append(row.city)
+        SITES.append(row.site)
+        point_differential = int(row.winnerscore) - int(row.loserscore)
+        FINAL_SCORE_MARGIN[row.superbowl] = point_differential
+        combined_score = int(row.winnerscore) + int(row.loserscore)
+        POINT_TOTAL[row.superbowl] = combined_score
+        team_appearances = (row.winner, row.loser)
+        if row.line != 'Pick \'em' and row.winner != row.favorite:
+            UPSETS[row.superbowl] = [row.winner, float(row.line)]
+        else:
+            pass
 
 print(functions.RTN())
 
+# results
 functions.header('results')
 for game, result in RESULTS.items():
-    print(f'Super Bowl {game}: {result[0]} {result[1]}, {result[2]} '\
-          f'{result[3]}')
+    print(f'Super Bowl {game}: {result[0]} {result[1]} - '
+          f'{result[2]} {result[3]}')
 print(functions.RTN())
 
+# appearances
 functions.tally_and_print('appearances', APPEARED, TEAM_APPEARANCES)
+
+# match ups
+functions.header('most common match ups')
+MATCH_UPS_LST = MATCH_UPS
+for teams in sorted(MATCH_UPS_LST):
+    opposing_teams = teams[0], teams[1]
+    opponents = sorted(opposing_teams)
+    OPPONENTS.append(opponents)
+
+for opposing_teams in OPPONENTS:
+    count = OPPONENTS.count(opposing_teams)
+    opponents = opposing_teams[0] + ' vs ' + opposing_teams[1]
+    MATCH_UPS_DCT[opponents] = count
+
+for opposing_teams, num_times_faced in sorted(MATCH_UPS_DCT.items(),
+                                              key=lambda x: x[1], reverse=True):
+    if num_times_faced > 1:
+        print(opposing_teams, num_times_faced)
+    else:
+        pass
+
+print(functions.RTN())
+
+# yet to appear
 functions.yet_to_appear_or_win('teams yet to appear', YET_TO_APPEAR, APPEARED)
+
+# yet to win
 functions.yet_to_appear_or_win('teams yet to win', YET_TO_WIN, WINNERS)
+
+# winners
 functions.tally_and_print('team wins', WINNERS, TEAM_WIN_TOTALS)
+
+# losers
 functions.tally_and_print('team losses', LOSERS, TEAM_LOSS_TOTALS)
+
+# mvps
 functions.tally_and_print('mvps', MVPS, MVPS_TOTALS)
 
+# players to win multiple mvps
 functions.header('players to win multiple mvps')
 SORTED_MVP_TOTALS = sorted(MVPS_TOTALS.items(), key=operator.itemgetter(0))
 for player, number_of_mvp_trophies in sorted(SORTED_MVP_TOTALS,
@@ -88,29 +126,34 @@ for player, number_of_mvp_trophies in sorted(SORTED_MVP_TOTALS,
         pass
 print(functions.RTN())
 
+# winning coaches
 functions.tally_and_print('winning coaches', COACHES_WON, COACH_WIN_TOTALS)
+
+# losing coaches
 functions.tally_and_print('losing coaches', COACHES_LOST, COACH_LOSS_TOTALS)
 
-functions.header("coaches who've won and lost")
+# coaches who've won and lost
+functions.header('coaches who\'ve won and lost')
 COACHES_WON_AND_LOST = set(COACHES_WON) & set(COACHES_LOST)
 for coach in sorted(COACHES_WON_AND_LOST):
     print(coach)
 print(functions.RTN())
 
+# total score
 functions.score_math('total score', POINT_TOTAL)
+
+# final score margin
 functions.score_math('final score margin', FINAL_SCORE_MARGIN)
 
-functions.header("upsets")
-UPSETS = {
-    sb_attribute[0]: [sb_attribute[3], float(sb_attribute[11])]
-    for sb, sb_attribute in SUPER_BOWLS.items()
-    if sb_attribute[10] != 'Pick \'em'
-    and sb_attribute[3] != sb_attribute[10]
-    }
+# upsets
+functions.header('upsets')
+for super_bowl, team_spread in sorted(UPSETS.items(), key=lambda x: x[1][1]):
+    print(f'Super Bowl {super_bowl}: {team_spread[0]} +{team_spread[1] * -1}')
 
-for sb, sb_attribute in sorted(UPSETS.items(), key=lambda x: x[1][1]):
-    print(f'Super Bowl {sb}: {sb_attribute[0]}, +{sb_attribute[1] * -1}')
 print(functions.RTN())
 
+# sites
 functions.tally_and_print('sites', SITES, SITES_TOTALS)
+
+# host cities
 functions.tally_and_print('host cities', HOST_CITIES, HOST_CITIES_TOTALS)
