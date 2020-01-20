@@ -3,7 +3,7 @@
 import csv
 import operator
 
-RTN = lambda: "\n"
+RTN = lambda: '\n'
 
 # populate list of current teams
 with open('csvs/teams.csv') as f:
