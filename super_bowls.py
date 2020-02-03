@@ -33,7 +33,6 @@ COACHES_WON = []
 COACHES_LOST = []
 HOST_CITIES = []
 SITES = []
-CURRENT_TEAMS = []
 OPPONENTS = []
 
 # import csv and populate a dictionary
