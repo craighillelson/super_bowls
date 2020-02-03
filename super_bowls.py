@@ -26,7 +26,7 @@ MATCH_UPS_DCT = {}
 YET_TO_APPEAR = []
 YET_TO_WIN = []
 WINNING_TEAMS = []
-LOSERS = []
+LOSING_TEAMS = []
 MATCH_UPS = []
 MVPS = []
 COACHES_WON = []
@@ -48,8 +48,8 @@ with open('csvs/super_bowls.csv') as f:
         match_up = row.winner, row.loser
         MATCH_UPS.append(match_up)
         WINNING_TEAMS.append(row.winner)
-        LOSERS.append(row.loser)
-        APPEARED = WINNING_TEAMS + LOSERS
+        LOSING_TEAMS.append(row.loser)
+        APPEARED = WINNING_TEAMS + LOSING_TEAMS
         MVPS.append(row.mvp)
         COACHES_WON.append(row.winningcoach)
         COACHES_LOST.append(row.losingcoach)
@@ -116,7 +116,7 @@ functions.yet_to_appear_or_win('teams yet to win', YET_TO_WIN, WINNING_TEAMS)
 functions.tally_and_print('team wins', WINNING_TEAMS, TEAM_WIN_TOTALS)
 
 # losers
-functions.tally_and_print('team losses', LOSERS, TEAM_LOSS_TOTALS)
+functions.tally_and_print('team losses', LOSING_TEAMS, TEAM_LOSS_TOTALS)
 
 # mvps
 functions.tally_and_print('mvps', MVPS, MVPS_TOTALS)
