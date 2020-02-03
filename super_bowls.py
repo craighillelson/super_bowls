@@ -25,7 +25,7 @@ MATCH_UPS_DCT = {}
 # lists
 YET_TO_APPEAR = []
 YET_TO_WIN = []
-WINNERS = []
+WINNING_TEAMS = []
 LOSERS = []
 MATCH_UPS = []
 MVPS = []
@@ -47,9 +47,9 @@ with open('csvs/super_bowls.csv') as f:
                                   row.loserscore]
         match_up = row.winner, row.loser
         MATCH_UPS.append(match_up)
-        WINNERS.append(row.winner)
+        WINNING_TEAMS.append(row.winner)
         LOSERS.append(row.loser)
-        APPEARED = WINNERS + LOSERS
+        APPEARED = WINNING_TEAMS + LOSERS
         MVPS.append(row.mvp)
         COACHES_WON.append(row.winningcoach)
         COACHES_LOST.append(row.losingcoach)
@@ -104,14 +104,16 @@ for opposing_teams, num_times_faced in sorted(MATCH_UPS_DCT.items(),
 
 print(functions.RTN())
 
+# calculate most consecutive appearances
+
 # yet to appear
 functions.yet_to_appear_or_win('teams yet to appear', YET_TO_APPEAR, APPEARED)
 
 # yet to win
-functions.yet_to_appear_or_win('teams yet to win', YET_TO_WIN, WINNERS)
+functions.yet_to_appear_or_win('teams yet to win', YET_TO_WIN, WINNING_TEAMS)
 
 # winners
-functions.tally_and_print('team wins', WINNERS, TEAM_WIN_TOTALS)
+functions.tally_and_print('team wins', WINNING_TEAMS, TEAM_WIN_TOTALS)
 
 # losers
 functions.tally_and_print('team losses', LOSERS, TEAM_LOSS_TOTALS)
