@@ -76,6 +76,7 @@ for game, result in RESULTS.items():
     losers_point_total = result[3]
     print(f'Super Bowl {game}: {winners} {winners_point_total} - '
           f'{losers} {losers_point_total}')
+
 print(functions.RTN())
 
 # appearances
