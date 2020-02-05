@@ -108,12 +108,10 @@ print(functions.RTN())
 # calculate most consecutive appearances
 
 # yet to appear
-# remove franchises that have won the game but moved cities
 functions.yet_to_appear_or_win('yet to appear', APPEARED, APPEARED_TEAMS,
                                YET_TO_APPEAR)
 
 # yet to win
-# remove franchises that have not appeared in the game but moved cities
 functions.yet_to_appear_or_win('yet to win', WON, WINNING_TEAMS, YET_TO_WIN)
 
 # winning teams
