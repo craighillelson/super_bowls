@@ -30,7 +30,9 @@ def yet_to_appear_or_win(list_headline, appeared_or_won, appeared_or_won_teams,
     appeared_or_won = set(appeared_or_won_teams)
     yet_to_appear_or_win = set(CURRENT_TEAMS) - appeared_or_won
     for team in sorted(yet_to_appear_or_win):
-        print(team)
+        city_nickname = team.split()
+        nickname = city_nickname[-1]
+        print(nickname)
     print(RTN())
 
 
