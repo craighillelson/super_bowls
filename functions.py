@@ -2,26 +2,34 @@
 
 import csv
 import operator
+from collections import namedtuple
 
 RTN = lambda: '\n'
 
-# populate list of current teams
-with open('csvs/teams.csv') as f:
-    F_CSV = csv.DictReader(f)
-    for row in F_CSV:
-        CURRENT_TEAMS = [row['team'] for row in F_CSV]
+CURRENT_TEAMS = []
+
+with open('csvs/current_teams.csv') as csv_file:
+    F_CSV = csv.reader(csv_file)
+    COLUMN_HEADINGS = next(F_CSV)
+    CSV_ROW = namedtuple('Row', COLUMN_HEADINGS)
+    for rows in F_CSV:
+        row = CSV_ROW(*rows)
+        team = f'{row.city} {row.nickname}'
+        CURRENT_TEAMS.append(team)
 
 def header(title):
     """ print header """
     print(title.upper())
 
 
-def yet_to_appear_or_win(list_headline, yet_to, appeared_or_won):
+def yet_to_appear_or_win(list_headline, appeared_or_won, appeared_or_won_teams,
+                         yet_to_appear_or_win):
     """ among current teams, find those who haven't yet appeared in or won \
     the game """
     header(list_headline)
-    yet_to = set(CURRENT_TEAMS) - set(appeared_or_won)
-    for team in sorted(yet_to):
+    appeared_or_won = set(appeared_or_won_teams)
+    yet_to_appear_or_win = set(CURRENT_TEAMS) - appeared_or_won
+    for team in sorted(yet_to_appear_or_win):
         print(team)
     print(RTN())
 
