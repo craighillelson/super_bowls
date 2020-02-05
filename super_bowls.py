@@ -23,6 +23,8 @@ SITES_TOTALS = {}
 MATCH_UPS_DCT = {}
 
 # lists
+APPEARED = set()
+WON = set()
 YET_TO_APPEAR = []
 YET_TO_WIN = []
 WINNING_TEAMS = []
@@ -48,7 +50,7 @@ with open('csvs/super_bowls.csv') as f:
         MATCH_UPS.append(match_up)
         WINNING_TEAMS.append(row.winner)
         LOSING_TEAMS.append(row.loser)
-        APPEARED = WINNING_TEAMS + LOSING_TEAMS
+        APPEARED_TEAMS = WINNING_TEAMS + LOSING_TEAMS
         MVPS.append(row.mvp)
         COACHES_WON.append(row.winningcoach)
         COACHES_LOST.append(row.losingcoach)
@@ -79,7 +81,7 @@ for game, result in RESULTS.items():
 print(functions.RTN())
 
 # appearances
-functions.tally_and_print('appearances', APPEARED, TEAM_APPEARANCES)
+functions.tally_and_print('appearances', APPEARED_TEAMS, TEAM_APPEARANCES)
 
 # match ups
 functions.header('most common match ups')
@@ -106,15 +108,18 @@ print(functions.RTN())
 # calculate most consecutive appearances
 
 # yet to appear
-functions.yet_to_appear_or_win('teams yet to appear', YET_TO_APPEAR, APPEARED)
+# remove franchises that have won the game but moved cities
+functions.yet_to_appear_or_win('yet to appear', APPEARED, APPEARED_TEAMS,
+                               YET_TO_APPEAR)
 
 # yet to win
-functions.yet_to_appear_or_win('teams yet to win', YET_TO_WIN, WINNING_TEAMS)
+# remove franchises that have not appeared in the game but moved cities
+functions.yet_to_appear_or_win('yet to win', WON, WINNING_TEAMS, YET_TO_WIN)
 
-# winners
+# winning teams
 functions.tally_and_print('team wins', WINNING_TEAMS, TEAM_WIN_TOTALS)
 
-# losers
+# losing teams
 functions.tally_and_print('team losses', LOSING_TEAMS, TEAM_LOSS_TOTALS)
 
 # mvps
@@ -130,6 +135,7 @@ for player, number_of_mvp_trophies in sorted(SORTED_MVP_TOTALS,
         print(player, number_of_mvp_trophies)
     else:
         pass
+
 print(functions.RTN())
 
 # winning coaches
@@ -143,6 +149,7 @@ functions.header('coaches who\'ve won and lost')
 COACHES_WON_AND_LOST = set(COACHES_WON) & set(COACHES_LOST)
 for coach in sorted(COACHES_WON_AND_LOST):
     print(coach)
+    #
 print(functions.RTN())
 
 # total score
