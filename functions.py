@@ -6,7 +6,9 @@ from collections import namedtuple
 
 RTN = lambda: '\n'
 
-CURRENT_TEAMS = []
+CURRENT_TEAMS_LST = []
+CURRENT_TEAMS_DCT = {}
+TEAMS = {}
 
 with open('csvs/current_teams.csv') as csv_file:
     F_CSV = csv.reader(csv_file)
@@ -15,7 +17,24 @@ with open('csvs/current_teams.csv') as csv_file:
     for rows in F_CSV:
         row = CSV_ROW(*rows)
         team = f'{row.city} {row.nickname}'
-        CURRENT_TEAMS.append(team)
+        CURRENT_TEAMS_LST.append(team)
+        CURRENT_TEAMS_DCT[row.nickname] = row.city
+
+with open('csvs/legacy_teams.csv') as csv_file:
+    F_CSV = csv.reader(csv_file)
+    COLUMN_HEADINGS = next(F_CSV)
+    CSV_ROW = namedtuple('Row', COLUMN_HEADINGS)
+    for rows in F_CSV:
+        row = CSV_ROW(*rows)
+        team = row.nickname
+        city = row.cities
+        if ', ' in city:
+            former_cities = city.split(', ')
+            TEAMS[team] = former_cities
+        else:
+            TEAMS[team] = [city]
+
+FRANCHISES = set(CURRENT_TEAMS_DCT.keys()).intersection(TEAMS.keys())
 
 def header(title):
     """ print header """
@@ -28,11 +47,12 @@ def yet_to_appear_or_win(list_headline, appeared_or_won, appeared_or_won_teams,
     the game """
     header(list_headline)
     appeared_or_won = set(appeared_or_won_teams)
-    yet_to_appear_or_win = set(CURRENT_TEAMS) - appeared_or_won
+    yet_to_appear_or_win = set(CURRENT_TEAMS_LST) - appeared_or_won
     for team in sorted(yet_to_appear_or_win):
         city_nickname = team.split()
         nickname = city_nickname[-1]
-        print(nickname)
+        if nickname not in FRANCHISES:
+            print(team)
     print(RTN())
 
 
