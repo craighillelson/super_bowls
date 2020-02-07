@@ -30,31 +30,32 @@ with open('csvs/legacy_teams.csv') as csv_file:
         else:
             TEAMS[team] = [city]
 
-print(RTN())
+# print(RTN())
 
-print('current teams')
-for nickname, city in sorted(CURRENT_TEAMS.items(), \
-                             key=lambda x: x[1]):
-    print(city, nickname)
+# print('current teams')
+# for nickname, city in sorted(CURRENT_TEAMS.items(), \
+#                              key=lambda x: x[1]):
+#     print(city, nickname)
 
-print(RTN())
+# print(RTN())
 
-print('legacy teams')
-for nickname, cities in sorted(TEAMS.items(), key=lambda x: x[1]):
-    i = 0
-    if len(city) > 1:
-        for former_city in cities:
-            print(cities[i], nickname)
-            i += 1
-    else:
-        print(city[0], nickname)
+# print('legacy teams')
+# for nickname, cities in sorted(TEAMS.items(), key=lambda x: x[1]):
+#     i = 0
+#     if len(city) > 1:
+#         for former_city in cities:
+#             print(cities[i], nickname)
+#             i += 1
+#     else:
+#         print(city[0], nickname)
 
-print(RTN())
+# print(RTN())
 
 FRANCHISES = set(CURRENT_TEAMS.keys()).intersection(TEAMS.keys())
+# print(FRANCHISES)
 
-print('current teams who were once in other cities')
-for franchise in sorted(FRANCHISES):
-    print(franchise)
+# print('current teams who were once in other cities')
+# for franchise in sorted(FRANCHISES):
+#     print(franchise)
 
-print(RTN())
+# print(RTN())
