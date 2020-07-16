@@ -1,4 +1,4 @@
-"""__doc__"""
+"""Query Super Bowl results."""
 
 # imports
 from collections import namedtuple
