@@ -37,14 +37,14 @@ with open('csvs/legacy_teams.csv') as csv_file:
 FRANCHISES = set(CURRENT_TEAMS_DCT.keys()).intersection(TEAMS.keys())
 
 def header(title):
-    """ print header """
+    """Print header."""
     print(title.upper())
 
 
 def yet_to_appear_or_win(list_headline, appeared_or_won, appeared_or_won_teams,
                          yet_to_appear_or_win):
-    """ among current teams, find those who haven't yet appeared in or won \
-    the game """
+    """Among current teams, find those who haven't yet appeared in or won \
+    the game."""
     header(list_headline)
     appeared_or_won = set(appeared_or_won_teams)
     yet_to_appear_or_win = set(CURRENT_TEAMS_LST) - appeared_or_won
@@ -57,13 +57,13 @@ def yet_to_appear_or_win(list_headline, appeared_or_won, appeared_or_won_teams,
 
 
 def count(lst_, dct_):
-    """ tally wins or losses """
+    """Tally wins or losses."""
     for sb_team in lst_:
         dct_[sb_team] = lst_.count(sb_team)
 
 
 def print_totals(category):
-    """ print total wins or losses """
+    """Print total wins or losses."""
     sorted_totals = sorted(category.items(), key=operator.itemgetter(0))
     for unit, total in sorted(sorted_totals, key=operator.itemgetter(1),
                               reverse=True):
@@ -72,7 +72,7 @@ def print_totals(category):
 
 
 def score_math(total_or_diff_header, final_score):
-    """ run calculations on score """
+    """Run calculations on score."""
     header(total_or_diff_header)
     for sb_number, total_or_diff in sorted(final_score.items(),
                                            key=lambda x: x[1], reverse=True):
@@ -81,7 +81,7 @@ def score_math(total_or_diff_header, final_score):
 
 
 def tally_and_print(category_header, team, team_tally):
-    """ print header, calculate totals, and print them """
+    """Print header, calculate totals, and print results."""
     header(category_header)
     count(team, team_tally)
     print_totals(team_tally)
