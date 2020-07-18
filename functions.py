@@ -36,6 +36,7 @@ with open('csvs/legacy_teams.csv') as csv_file:
 
 FRANCHISES = set(CURRENT_TEAMS_DCT.keys()).intersection(TEAMS.keys())
 
+
 def header(title):
     """Print header."""
     print(title.upper())
