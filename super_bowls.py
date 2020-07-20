@@ -66,8 +66,6 @@ with open('csvs/super_bowls.csv') as f:
         else:
             pass
 
-print(functions.RTN())
-
 # results
 functions.header('results')
 for game, result in RESULTS.items():
@@ -78,12 +76,10 @@ for game, result in RESULTS.items():
     print(f'Super Bowl {game}: {winners} {winners_point_total} - '
           f'{losers} {losers_point_total}')
 
-print(functions.RTN())
-
-# appearances
+# most appearances by team
 functions.tally_and_print('appearances', APPEARED_TEAMS, TEAM_APPEARANCES)
 
-# match ups
+# most common match ups
 functions.header('most common match ups')
 MATCH_UPS_LST = MATCH_UPS
 for teams in sorted(MATCH_UPS_LST):
@@ -103,21 +99,19 @@ for opposing_teams, num_times_faced in sorted(MATCH_UPS_DCT.items(),
     else:
         pass
 
-print(functions.RTN())
-
 # calculate most consecutive appearances
 
-# yet to appear
+# teams yet to appear
 functions.yet_to_appear_or_win('yet to appear', APPEARED, APPEARED_TEAMS,
                                YET_TO_APPEAR)
 
-# yet to win
+# teams yet to win
 functions.yet_to_appear_or_win('yet to win', WON, WINNING_TEAMS, YET_TO_WIN)
 
-# winning teams
+# winning teams ordered by number of wins
 functions.tally_and_print('team wins', WINNING_TEAMS, TEAM_WIN_TOTALS)
 
-# losing teams
+# losing teams ordered by number of losses
 functions.tally_and_print('team losses', LOSING_TEAMS, TEAM_LOSS_TOTALS)
 
 # mvps
@@ -134,12 +128,10 @@ for player, number_of_mvp_trophies in sorted(SORTED_MVP_TOTALS,
     else:
         pass
 
-print(functions.RTN())
-
-# winning coaches
+# winning coaches ordered by number of wins
 functions.tally_and_print('winning coaches', COACHES_WON, COACH_WIN_TOTALS)
 
-# losing coaches
+# losing coaches ordered by number of losses
 functions.tally_and_print('losing coaches', COACHES_LOST, COACH_LOSS_TOTALS)
 
 # coaches who've won and lost
@@ -147,13 +139,11 @@ functions.header('coaches who\'ve won and lost')
 COACHES_WON_AND_LOST = set(COACHES_WON) & set(COACHES_LOST)
 for coach in sorted(COACHES_WON_AND_LOST):
     print(coach)
-    #
-print(functions.RTN())
 
-# total score
+# total scores in descending order
 functions.score_math('total score', POINT_TOTAL)
 
-# final score margin
+# final score margin in descending order
 functions.score_math('final score margin', FINAL_SCORE_MARGIN)
 
 # upsets
@@ -164,10 +154,9 @@ for super_bowl, team_line in sorted(UPSETS.items(), key=lambda x: x[1][1]):
     betting_line = '+' + str(line)
     print(f'Super Bowl {super_bowl}: {team} {betting_line}')
 
-print(functions.RTN())
-
 # sites
 functions.tally_and_print('sites', SITES, SITES_TOTALS)
 
 # host cities
 functions.tally_and_print('host cities', HOST_CITIES, HOST_CITIES_TOTALS)
+print('\n')
