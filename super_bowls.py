@@ -38,7 +38,7 @@ SITES = []
 OPPONENTS = []
 
 # import csv and populate a dictionary
-with open('csvs/super_bowls.csv') as f:
+with open("csvs/super_bowls.csv", "r") as f:
     F_CSV = csv.reader(f)
     HEADINGS = next(F_CSV)
     ROW = namedtuple('Row', HEADINGS)
