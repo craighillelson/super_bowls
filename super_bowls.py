@@ -151,8 +151,8 @@ functions.header('upsets')
 for super_bowl, team_line in sorted(UPSETS.items(), key=lambda x: x[1][1]):
     team = team_line[0]
     line = team_line[1] * -1
-    betting_line = '+' + str(line)
-    print(f'Super Bowl {super_bowl}: {team} {betting_line}')
+    BETTING_LINE = '+' + str(line)
+    print(f'Super Bowl {super_bowl}: {team} {BETTING_LINE}')
 
 # sites
 functions.tally_and_print('sites', SITES, SITES_TOTALS)
