@@ -221,8 +221,7 @@ def output_dictionary_sorted_by_values_ascending(header, dct):
 
 def output_dictionary_sorted_by_values_descending(header, dct):
     print(header)
-    for k, v in sorted(dct.items(), key=lambda x: x[1],
-                       reverse=True):
+    for k, v in sorted(dct.items(), key=lambda x: x[1], reverse=True):
         print(k, v)
 
 
@@ -262,13 +261,10 @@ def output_host_cities():
         print(f'{city}, {number_of_super_bowls_hosted}')
 
 
-def output_most_common_match_ups():
+def output_most_common_match_ups(lst):
     print("\nmost common match ups")
-    for match_ups_count in match_ups_counts:
-        if match_ups_count[1] > 1:
-            teams = match_ups_count[0]
-            number_of_super_bowls = match_ups_count[1]
-            print(f"{teams}, {number_of_super_bowls}")
+    for match_ups_count in lst:
+        print(*match_ups_count, sep=", ")
 
 
 def output_teams_that_have_not_won_or_appeared(header, lst):
@@ -301,18 +297,19 @@ def output_wins_or_losses_by_coach(header, lst):
         print(coach, result)
 
 
-
 super_bowls = open_csv_and_populate_dct()
 
 winning_teams, losing_teams, winning_teams_favorites_and_lines = \
 build_lists_and_dictionary_of_winning_and_losing_teams()
-franchises_that_have_won = build_list_of_unique_values(winning_teams)
-franchises_that_have_lost = build_list_of_unique_values(losing_teams)
 
+franchises_that_have_won = build_list_of_unique_values(winning_teams)
 output_list("franchises that have won", franchises_that_have_won)
+
+franchises_that_have_lost = build_list_of_unique_values(losing_teams)
 output_list("\nfranchises that have lost", franchises_that_have_lost)
 
-all_appearances = franchises_that_have_won + franchises_that_have_lost
+all_appearances = build_list_of_won_and_lost(franchises_that_have_won,
+                                             franchises_that_have_lost)
 franchises_that_have_appeared = build_list_of_unique_values(all_appearances)
 output_list("\nfranchises that have appeared", franchises_that_have_appeared)
 
@@ -327,22 +324,16 @@ count_wins_or_losses(winning_teams)
 
 team_number_of_wins = \
 build_dictionary_of_teams_and_wins_or_losses(winning_teams_number_of_wins)
-
-print("\nmost wins by a franchise")
-for team, number_of_wins in sorted(team_number_of_wins.items(),
-                                     key=lambda x: x[1], reverse=True):
-    print(team, number_of_wins)
+output_dictionary_sorted_by_values_descending(
+"\nmost wins by a franchise", team_number_of_wins)
 
 losing_teams_number_of_losses = \
 count_wins_or_losses(losing_teams)
 
 team_number_of_losses = \
 build_dictionary_of_teams_and_wins_or_losses(losing_teams_number_of_losses)
-
-print("\nmost losses by a franchise")
-for team, number_of_losses in sorted(team_number_of_losses.items(),
-                                     key=lambda x: x[1], reverse=True):
-    print(team, number_of_losses)
+output_dictionary_sorted_by_values_descending(
+"\nmost losses by a franchise", team_number_of_losses)
 
 current_teams = open_csv_and_populate_list()
 
@@ -366,9 +357,8 @@ output_mvps_and_number_of_wins()
 
 match_ups = build_list_of_match_ups()
 match_ups_sorted = build_list_of_match_ups_sorted()
-match_ups_count = Counter(match_ups_sorted)
-match_ups_counts = match_ups_count.most_common()
-output_most_common_match_ups()
+match_ups_count = count_wins_or_losses(match_ups_sorted)
+output_most_common_match_ups(match_ups_count)
 
 winning_coaches, losing_coaches = build_lists_of_winning_and_losing_coaches()
 
