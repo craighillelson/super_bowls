@@ -7,14 +7,6 @@ import csv
 from collections import Counter
 from collections import namedtuple
 
-legacy_franchises = {
-    "Indianapolis Colts": ["Baltimore Colts"],
-    "Los Angeles Chargers": ["San Diego Chargers"],
-    "Las Vegas Raiders": ["Los Angeles Raiders", "Oakland Raiders"],
-    "Los Angeles Rams": ["St. Louis Rams"],
-    "Washington Commanders": ["Washington Redskins"],
-}
-
 
 def open_csv_and_populate_dct():
     dct = {}
@@ -216,7 +208,24 @@ def count_games_by_host_city():
     return city_counts.most_common()
 
 
+def build_list_of_elements_in_other_list(lst1, lst2):
+    return [i for i in lst1 if i in lst2]
+
+
+def build_list_of_elements_not_in_other_list(lst1, lst2):
+    return [i for i in lst1 if i not in lst2]
+
+
 super_bowls = open_csv_and_populate_dct()
+current_teams = open_csv_and_populate_list()
+legacy_franchises = {
+    "Indianapolis Colts": ["Baltimore Colts"],
+    "Los Angeles Chargers": ["San Diego Chargers"],
+    "Las Vegas Raiders": ["Los Angeles Raiders", "Oakland Raiders"],
+    "Los Angeles Rams": ["St. Louis Rams"],
+    "Washington Commanders": ["Washington Redskins"],
+}
+
 print("\nsuper bowl results")
 for super_bowl in super_bowls.values():
     super_bowl_name = super_bowl[0]
@@ -270,23 +279,20 @@ for franchise, losses in sorted(team_number_of_losses.items(), \
                                 key=lambda x: x[1], reverse=True):
     print(franchise, losses)
 
-current_teams = open_csv_and_populate_list()
-
 print("\ncurrent franchises that have not won")
 for franchise in sorted(current_teams):
     if franchise not in franchises_that_have_won and franchise not in \
     list(legacy_franchises.keys()):
         print(franchise)
 
+no_appearances = \
+    build_list_of_elements_not_in_other_list(current_teams, all_appearances)
+legacy_appearances = \
+    build_list_of_elements_in_other_list(no_appearances, legacy_franchises)
+no_appearances_reconciled = \
+    build_list_of_elements_not_in_other_list(no_appearances, legacy_appearances)
+
 print("\ncurrent franchises that have not appeared")
-
-no_appearances = [franchise for franchise in current_teams if franchise \
-                  not in all_appearances]
-legacy_appearances = [franchise for franchise in no_appearances if franchise \
-                      in legacy_franchises]
-no_appearances_reconciled = [franchise for franchise in no_appearances \
-                             if franchise not in legacy_appearances]
-
 for franchise in sorted(no_appearances_reconciled):
     print(franchise)
 
